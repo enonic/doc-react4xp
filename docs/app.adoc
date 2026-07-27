@@ -37,7 +37,24 @@ On Enonic XP 8, mounting the `react4xp` API is required wherever React4XP render
 == App function
 
 The app function is by default located in `/src/main/resources/cms/app.ts`.
-It follows a simple three-step flow:
+It exports `GET`, which XP's site engine invokes for every request the <<#site-mapping, site mapping>> catches:
+
+./src/main/resources/cms/app.ts
+[source,TypeScript]
+----
+import {render} from '/lib/enonic/react4xp';
+import {getContent} from '/lib/xp/portal';
+import {dataFetcher} from '/react4xp/dataFetcher';
+import type {Request, Response} from '@enonic-types/core';
+
+export function GET(request: Request): Response {
+    // the three steps below
+}
+----
+
+Declare one export per HTTP method the function handles - `GET`, `POST`, `PUT`, `DELETE`, `PATCH`, `HEAD`, `OPTIONS` - or `all` as a fallback for any method without its own export. See https://developer.enonic.com/docs/code/stable/web/request-response[Request & Response] for the full contract.
+
+Inside, it follows a simple three-step flow:
 
 . Get component props using the dataFetcher
 +

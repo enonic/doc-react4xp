@@ -49,5 +49,5 @@ Of course, this also applies to imported packages / nested components and so on.
 ====
 Your React components may produce server-side errors, but these are not always easily interpreted.
 
-Switching over to pure _clientside rendering_ (by setting SSR false, Hydrate true) in your controller, the particular React component will likely give you a better/sourcemapped error message in the browser console, making your debugging life easier.
+Switching over to pure _clientside rendering_ (by setting SSR false, Hydrate true) in your app function, the particular React component will likely give you a better/sourcemapped error message in the browser console, making your debugging life easier.
 ====

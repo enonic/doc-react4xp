@@ -48,7 +48,7 @@ apis:
 
 === Invocation example
 
-A minimal controller passes an <<entries#, entry>>, `props`, and the `request` to `render`. The return value is an XP response object you return directly:
+A minimal HTTP function passes an <<entries#, entry>>, `props`, and the `request` to `render`. The return value is an XP response object you return directly:
 
 [source,typescript]
 ----
@@ -61,7 +61,7 @@ export function get(request: Request) {
 }
 ----
 
-`render` returns a `{body, pageContributions}` response object, so returning it straight from the controller both renders server-side and adds everything the browser needs to activate the react app. Each function and its options are documented below.
+`render` returns a `{body, pageContributions}` response object, so returning it straight from the function both renders server-side and adds everything the browser needs to activate the react app. Each function and its options are documented below.
 
 == Functions
 
@@ -81,7 +81,7 @@ Parameters
 [grid="none"]
 |===
 | Name | Type | Description
-| `entry` | string \| component object | Reference to an <<entries#, entry>>: the react component to be rendered. <<entries#jsxPath, JsxPath>> reference - or if the entry is a TSX/JSX file with the _same name_ in the _same folder_ as the controller, you can use a `portal.getComponent()` object here. Corresponds to the template argument in `thymeleaf.render`.
+| `entry` | string \| component object | Reference to an <<entries#, entry>>: the react component to be rendered. <<entries#jsxPath, JsxPath>> reference - or if the entry is a TSX/JSX file with the _same name_ in the _same folder_ as the component implementation, you can use a `portal.getComponent()` object here. Corresponds to the template argument in `thymeleaf.render`.
 | `props` | object | *Optional.* Data model passed into the react component. JS object must be serializable (no functions can be passed). Corresponds to the model argument in `thymeleaf.render`.
 | `request` | https://developer.enonic.com/docs/code/stable/web/request-response[XP request object] | *Optional* (but _required for react activation_). Include to detect the rendering mode inside/outside Content Studio: inside Content Studio there should be only a static serverside-rendering, no browser react activation (or client-side rendering), only returning get an HTML visualization with the initial `props`. Special case: if `request` is not an object but omitted/falsy, page-contributions rendering is _completely skipped_. In this case, the _options_ argument (below) is still valid: any added `body` there will still serve as a container for the rendered output from this call, and any `pageContributions` inside _options_ are still added and returned.
 | `options` | object | *Optional.* Additional options to control the rendering (see below).
@@ -125,7 +125,7 @@ Inside that matching-ID element, there will be a serverside rendering of the ent
 [[render_request]]
 ==== Request and automated behavior
 
-`.render` is intended to be convenient to work with and safely wrap around some common corner cases. It automates a little bit of behavior, depending on the `request` object argument (which stems from the XP controller):
+`.render` is intended to be convenient to work with and safely wrap around some common corner cases. It automates a little bit of behavior, depending on the `request` object argument (which stems from the HTTP function):
 
 ===== `render` with `request`:
 
@@ -237,7 +237,7 @@ import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
 export const dataFetcher = new DataFetcher();
 ----
 
-NOTE: Instantiate the `DataFetcher` once in its own module and import that instance where needed - both in the <<controller#, app controller>> and in the React entry via `componentRegistry`. The constructor takes no arguments.
+NOTE: Instantiate the `DataFetcher` once in its own module and import that instance where needed - both in the <<app#, app function>> and in the React entry via `componentRegistry`. The constructor takes no arguments.
 
 [[data_fetcher_registration]]
 ==== Registering processors
@@ -344,7 +344,7 @@ The return value is a `ProcessResult`:
 | `meta` | MetaData | `type`, `id` and `path` of the content, plus the request `mode`
 |===
 
-Pass the whole result straight to `render` - see the <<controller#, app controller>>:
+Pass the whole result straight to `render` - see the <<app#, app function>>:
 
 [source,TypeScript]
 ----
@@ -421,7 +421,7 @@ Creates an initial react4xp data object from an entry.
 [grid="none"]
 |===
 | Name | Type | Description
-| `entry` | string \| component object | Reference to an <<entries#, entry>>: the react component to be rendered. Direct <<entries#jsxPath, JsxPath>> string, or a `portal.getComponent()` object. If you use a component object like that, the entry must be a TSX/JSX file with the _same name_ in the _same folder_ as the controller, and react4xp will try to generate an ID from the content.
+| `entry` | string \| component object | Reference to an <<entries#, entry>>: the react component to be rendered. Direct <<entries#jsxPath, JsxPath>> string, or a `portal.getComponent()` object. If you use a component object like that, the entry must be a TSX/JSX file with the _same name_ in the _same folder_ as the component implementation, and react4xp will try to generate an ID from the content.
 |===
 
 *Constructs* a react4xp data object, which exposes the attributes and methods below.
@@ -557,7 +557,7 @@ Parameters
 [.lead]
 Returns
 
-Returns an HTML string ready to return as the `body` attribute in a https://developer.enonic.com/docs/code/stable/web/request-response[response object] from the controller.
+Returns an HTML string ready to return as the `body` attribute in a https://developer.enonic.com/docs/code/stable/web/request-response[response object] from the function.
 
 The root of the returned HTML is always a *surrounding container* HTML that will have a matching-ID *target element* in it somewhere (an element matching the data object's ID (`react4xpId`), either from the <<#set_id, ID setter methods>>, or a generated ID if they haven't been run). This surrounding structure is `options.body`, unchanged if that already contained a matching-ID element, or with a new target element generated and inserted at the end if it didn't have one. If there is no `options.body`, the surrounding container is just a generated target element.
 
@@ -606,7 +606,7 @@ Parameters
 [.lead]
 Returns
 
-A regular https://developer.enonic.com/docs/code/stable/web/sites/contributions[page contributions] object, ready to be used as the `pageContributions` attribute in an https://developer.enonic.com/docs/code/stable/web/request-response[response object] from the controller.
+A regular https://developer.enonic.com/docs/code/stable/web/sites/contributions[page contributions] object, ready to be used as the `pageContributions` attribute in an https://developer.enonic.com/docs/code/stable/web/request-response[response object] from the function.
 
 Includes everything the browser needs to activate (or client-side render) the react component: script tags with urls to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset and an activating trigger call to the client wrapper. Urls point to react4xp's own optimized asset services. Also included before this, are any input `options.pageContributions`.
 

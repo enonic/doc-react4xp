@@ -100,7 +100,7 @@ Update the npm scripts so the build runs tsdown (server code and client assets) 
 === Update to the new types
 
 React4XP 7 builds on `@enonic-types/core`.
-In your controllers and processors, replace `Enonic.Xp.Http.Request` from `@enonic/js-utils/types/Request` with `Request` from `@enonic-types/core`.
+In your functions and processors, replace `Enonic.Xp.Http.Request` from `@enonic/js-utils/types/Request` with `Request` from `@enonic-types/core`.
 
 == Build and deploy
 

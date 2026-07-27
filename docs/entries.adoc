@@ -7,7 +7,7 @@
 == What is an entry?
 React4xp is not limited to a single "React app", it may actually support multiple React instances on a single page. 
 
-In. React4XP we call these `entries`. It's actually a webpack term, but in React4xp we use the word entry for *a React component that can be called by React4xp* in an XP controller. They are the only react files that React4xp can use directly.
+In. React4XP we call these `entries`. It's actually a webpack term, but in React4xp we use the word entry for *a React component that can be called by React4xp* from an XP script file. They are the only react files that React4xp can use directly.
 
 Think of entries as *"bridge elements"*:
 
@@ -17,7 +17,7 @@ image:entries.png[title="React4xp Entries basic structure. Controllers can use e
 
 (Here's a <<entries/cheatsheet#, cheat sheet>>. See also chunks, for a <<chunks#entries_and_chunks, complete picture>>)
 
-On the XP/server side, you have the controllers with their backend XP flow, logic and XP lib imports. Entries are the beginning of the frontend side (although the same code is also used for serverside-rendering): they do regular frontend-style ES6 logic and can *import* stuff from NPM/node_modules, your own logic, nested react components, whatever - even other entries.
+On the XP/server side, you have the server-side functions with their backend XP flow, logic and XP lib imports. Entries are the beginning of the frontend side (although the same code is also used for serverside-rendering): they do regular frontend-style ES6 logic and can *import* stuff from NPM/node_modules, your own logic, nested react components, whatever - even other entries.
 
 
 
@@ -130,7 +130,7 @@ Short and brutal: the jsxPath is a name string generated from the path and filen
 == From source file location to jsxPath
 During development though, these 3 rules are probably easier:
 
-. If you use `portal.getComponent()` to insert a component object (like `entry` in https://developer.enonic.com/learn/react4xp-tutorial[the first example]), you can ignore the jsxPath and let the component object do the job: `React4xp.render` will use it to look for an entry with *the same name, in the same folder*, as a part/page/layout controller.
+. If you use `portal.getComponent()` to insert a component object (like `entry` in https://developer.enonic.com/learn/react4xp-tutorial[the first example]), you can ignore the jsxPath and let the component object do the job: `React4xp.render` will use it to look for an entry with *the same name, in the same folder*, as a part/page/layout implementation.
 
 But if you need to access an entry with a particular name or from a different folder (from anywhere in the compiled JAR, actually), here's *how to find the jsxPath of an entry*:
 

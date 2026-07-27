@@ -25,5 +25,5 @@ A fully working demo application is available on https://market.enonic.com/vendo
 - <<library#, Library reference>> - the `render` / `processHtml` functions and the `React4xp` object.
 - <<ssr#, SSR engine>> and <<hydration#, Hydration>> - how server- and client-side rendering work.
 - <<config#, Configuration>>, <<build#, Build>>, <<chunks#, Chunks>> and <<entries#, Entries>> - compilation and runtime internals.
-- <<controller#, App.ts>> and <<macro-data#, Macros>> - controllers and macro data.
+- <<app#, App.ts>> and <<macro-data#, Macros>> - the app function and macro data.
 - <<release#, Release notes>> and <<upgrade#, Upgrade notes>>.

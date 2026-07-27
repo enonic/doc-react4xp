@@ -1,8 +1,8 @@
-= App controller
+= App.ts
 :toc: right
 :imagesdir: media/
 
-The app controller is responsible for bootstrapping all important elements of React4XP.
+The app function is responsible for bootstrapping all important elements of React4XP.
 
 [[site-mapping]]
 == Site mapping
@@ -34,10 +34,10 @@ apis: # <3>
 
 On Enonic XP 8, mounting the `react4xp` API is required wherever React4XP renders - see <<library#mount-api, Mount the API>>.
 
-== Controller
+== App function
 
-The controller is by default located `/src/main/resources/cms/app.ts`.
-It uses a traditional MVC approach:
+The app function is by default located in `/src/main/resources/cms/app.ts`.
+It follows a simple three-step flow:
 
 . Get component props using the dataFetcher
 +
@@ -125,7 +125,7 @@ From here on, it is all React.
 
 == Output
 
-If you take a closer look at the page markup produced by the app controller, you should see something like this:
+If you take a closer look at the page markup produced by the app function, you should see something like this:
 
 TIP: The links have been shortened for better readability
 
@@ -153,7 +153,7 @@ TIP: The links have been shortened for better readability
 </html>
 ----
 
-The result is the HTML string we passed to the  `render` request of our initial controller - but *a lot of stuff* has also been inserted.
+The result is the HTML string we passed to the  `render` request of our app function - but *a lot of stuff* has also been inserted.
 
 <1> `globals.<contenthash>.js` is react and react-dom bundled together. For improved security, they are served from XP instead of a random CDN.
 <2> `runtime.js` containst chunked boilerplate code to run entries.

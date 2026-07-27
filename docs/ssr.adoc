@@ -46,7 +46,7 @@ Since development can involve repeated app/server restarts, here is one way to i
 [[performance]]
 == SSR performance
 
-Apart from when assets are initialized during the engine <<#warmup, warmup>>, each SSR should be fast. However, in cases where you need to improve SSR performance further, it can be done by wrapping the rendering in a https://developer.enonic.com/docs/cache-library[cache] in the controller.
+Apart from when assets are initialized during the engine <<#warmup, warmup>>, each SSR should be fast. However, in cases where you need to improve SSR performance further, it can be done by wrapping the rendering in a https://developer.enonic.com/docs/cache-library[cache] in the app function.
 
 Be sure to use any value that can change the rendering output - usually from `props` (and `options`?) or a subset of them - as a *key* in the cache.
 

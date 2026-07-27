@@ -74,9 +74,9 @@ src/main/resources/
 <4> XP app plugin plus the `npmBuild` and `react4xp` Gradle tasks.
 <5> Application descriptor (title, vendor).
 <6> Static and client-only assets, served through `lib-asset`.
-<7> Site descriptor with the catch-all controller mapping and mounted APIs.
-<8> The app controller - the single entry point for page rendering. See <<controller#, App.ts>>.
-<9> Component controller enabling drag-and-drop in the visual page editor.
+<7> Site descriptor with the catch-all request mapping and mounted APIs.
+<8> The app function - handles all page rendering. See <<app#, App.ts>>.
+<9> Component function enabling drag-and-drop in the visual page editor.
 <10> The one and only React4XP <<entries#, entry>>.
 <11> Maps content types and components to React components.
 <12> Maps content types and components to server-side data processors.
@@ -170,7 +170,7 @@ export const helloProcessor: ComponentProcessor<PageDescriptor> = (params) => {
 
 === Site mapping
 
-The single entry works because the site descriptor routes every request to one controller:
+The single entry works because the site descriptor routes every request to one function:
 
 .src/main/resources/cms/site.yaml
 [source,YAML]
@@ -192,7 +192,7 @@ apis:
 <1> Matches everything *except* the internal React4XP routes.
 <2> Mounting the `react4xp` API is required on XP 8 - see <<library#mount-api, Mount the API>>.
 
-See <<controller#, App.ts>> for the controller itself.
+See <<app#, App.ts>> for the function itself.
 
 [[build-pipeline]]
 == Build pipeline

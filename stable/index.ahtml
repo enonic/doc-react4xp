@@ -519,7 +519,7 @@ New to React4XP? Start with the <a href="https://developer.enonic.com/learn/reac
 <p><a href="config.ahtml">Configuration</a>, <a href="build.ahtml">Build</a>, <a href="chunks.ahtml">Chunks</a> and <a href="entries.ahtml">Entries</a> - compilation and runtime internals.</p>
 </li>
 <li>
-<p><a href="controller.ahtml">App.ts</a> and <a href="macro-data.ahtml">Macros</a> - controllers and macro data.</p>
+<p><a href="app.ahtml">App.ts</a> and <a href="macro-data.ahtml">Macros</a> - the app function and macro data.</p>
 </li>
 <li>
 <p><a href="release.ahtml">Release notes</a> and <a href="upgrade.ahtml">Upgrade notes</a>.</p>
@@ -531,7 +531,7 @@ New to React4XP? Start with the <a href="https://developer.enonic.com/learn/reac
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:48:42 UTC
+Last updated 2026-07-27 16:59:10 UTC
 </div>
 </div>
 </body>

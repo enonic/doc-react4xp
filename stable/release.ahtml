@@ -485,7 +485,7 @@ React4XP 7 requires Enonic XP 8. If you are still on XP 7, stay on React4XP 6.
 <div class="sectionbody">
 <div class="paragraph">
 <p>Component descriptors (site, parts, layouts, pages, admin tools and so on) are now written in YAML using the new <code>kind:</code> format, replacing the previous XML descriptors.
-CMS schemas and their controllers also move from the <code>site/</code> folder to <code>cms/</code>.</p>
+CMS schemas and their implementations also move from the <code>site/</code> folder to <code>cms/</code>.</p>
 </div>
 </div>
 </div>
@@ -543,7 +543,7 @@ See the upgrade notes for the exact versions.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:48:42 UTC
+Last updated 2026-07-27 16:59:10 UTC
 </div>
 </div>
 </body>

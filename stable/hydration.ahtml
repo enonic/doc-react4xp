@@ -524,7 +524,7 @@ return output;</code></pre>
 <p>Your React components may produce server-side errors, but these are not always easily interpreted.</p>
 </div>
 <div class="paragraph">
-<p>Switching over to pure <em>clientside rendering</em> (by setting SSR false, Hydrate true) in your controller, the particular React component will likely give you a better/sourcemapped error message in the browser console, making your debugging life easier.</p>
+<p>Switching over to pure <em>clientside rendering</em> (by setting SSR false, Hydrate true) in your app function, the particular React component will likely give you a better/sourcemapped error message in the browser console, making your debugging life easier.</p>
 </div>
 </td>
 </tr>
@@ -535,7 +535,7 @@ return output;</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:48:42 UTC
+Last updated 2026-07-27 16:59:10 UTC
 </div>
 </div>
 </body>

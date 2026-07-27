@@ -465,7 +465,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>React4xp is not limited to a single "React app", it may actually support multiple React instances on a single page.</p>
 </div>
 <div class="paragraph">
-<p>In. React4XP we call these <code>entries</code>. It&#8217;s actually a webpack term, but in React4xp we use the word entry for <strong>a React component that can be called by React4xp</strong> in an XP controller. They are the only react files that React4xp can use directly.</p>
+<p>In. React4XP we call these <code>entries</code>. It&#8217;s actually a webpack term, but in React4xp we use the word entry for <strong>a React component that can be called by React4xp</strong> from an XP script file. They are the only react files that React4xp can use directly.</p>
 </div>
 <div class="paragraph">
 <p>Think of entries as <strong>"bridge elements"</strong>:</p>
@@ -478,7 +478,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>(Here&#8217;s a <a href="entries/cheatsheet.ahtml">cheat sheet</a>. See also chunks, for a <a href="chunks.ahtml#entries_and_chunks">complete picture</a>)</p>
 </div>
 <div class="paragraph">
-<p>On the XP/server side, you have the controllers with their backend XP flow, logic and XP lib imports. Entries are the beginning of the frontend side (although the same code is also used for serverside-rendering): they do regular frontend-style ES6 logic and can <strong>import</strong> stuff from NPM/node_modules, your own logic, nested react components, whatever - even other entries.</p>
+<p>On the XP/server side, you have the server-side functions with their backend XP flow, logic and XP lib imports. Entries are the beginning of the frontend side (although the same code is also used for serverside-rendering): they do regular frontend-style ES6 logic and can <strong>import</strong> stuff from NPM/node_modules, your own logic, nested react components, whatever - even other entries.</p>
 </div>
 </div>
 </div>
@@ -643,7 +643,7 @@ export default props =&gt; &lt;HookButton {...props} /&gt;;</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>If you use <code>portal.getComponent()</code> to insert a component object (like <code>entry</code> in <a href="https://developer.enonic.com/learn/react4xp-tutorial">the first example</a>), you can ignore the jsxPath and let the component object do the job: <code>React4xp.render</code> will use it to look for an entry with <strong>the same name, in the same folder</strong>, as a part/page/layout controller.</p>
+<p>If you use <code>portal.getComponent()</code> to insert a component object (like <code>entry</code> in <a href="https://developer.enonic.com/learn/react4xp-tutorial">the first example</a>), you can ignore the jsxPath and let the component object do the job: <code>React4xp.render</code> will use it to look for an entry with <strong>the same name, in the same folder</strong>, as a part/page/layout implementation.</p>
 </li>
 </ol>
 </div>
@@ -706,7 +706,7 @@ XP 8 apps have no <em>site/</em> folder, so this rule no longer applies to them.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:48:42 UTC
+Last updated 2026-07-27 16:59:10 UTC
 </div>
 </div>
 </body>

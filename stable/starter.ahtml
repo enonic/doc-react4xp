@@ -600,15 +600,15 @@ src/main/resources/
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>Site descriptor with the catch-all controller mapping and mounted APIs.</td>
+<td>Site descriptor with the catch-all request mapping and mounted APIs.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>The app controller - the single entry point for page rendering. See <a href="controller.ahtml">App.ts</a>.</td>
+<td>The app function - handles all page rendering. See <a href="app.ahtml">App.ts</a>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="9"></i><b>9</b></td>
-<td>Component controller enabling drag-and-drop in the visual page editor.</td>
+<td>Component function enabling drag-and-drop in the visual page editor.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="10"></i><b>10</b></td>
@@ -752,7 +752,7 @@ dataFetcher.addContentType('portal:site', {processor: helloProcessor});</code></
 <div class="sect2">
 <h3 id="site_mapping"><a class="link" href="#site_mapping">Site mapping</a></h3>
 <div class="paragraph">
-<p>The single entry works because the site descriptor routes every request to one controller:</p>
+<p>The single entry works because the site descriptor routes every request to one function:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/main/resources/cms/site.yaml</div>
@@ -784,7 +784,7 @@ apis:
 </table>
 </div>
 <div class="paragraph">
-<p>See <a href="controller.ahtml">App.ts</a> for the controller itself.</p>
+<p>See <a href="app.ahtml">App.ts</a> for the function itself.</p>
 </div>
 </div>
 </div>
@@ -980,7 +980,7 @@ The 5.x starter predates the <code>componentRegistry</code>/<code>dataFetcher</c
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:48:42 UTC
+Last updated 2026-07-27 16:59:10 UTC
 </div>
 </div>
 </body>

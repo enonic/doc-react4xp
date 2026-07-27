@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>App controller</title>
+<title>App.ts</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,12 +437,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>App controller</h1>
+<h1>App.ts</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#site-mapping">Site mapping</a></li>
-<li><a href="#controller">Controller</a></li>
+<li><a href="#app_function">App function</a></li>
 <li><a href="#output">Output</a></li>
 </ul>
 </div>
@@ -451,7 +451,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The app controller is responsible for bootstrapping all important elements of React4XP.</p>
+<p>The app function is responsible for bootstrapping all important elements of React4XP.</p>
 </div>
 </div>
 </div>
@@ -503,11 +503,11 @@ apis: <i class="conum" data-value="3"></i><b>(3)</b>
 </div>
 </div>
 <div class="sect1">
-<h2 id="controller"><a class="link" href="#controller">Controller</a></h2>
+<h2 id="app_function"><a class="link" href="#app_function">App function</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The controller is by default located <code>/src/main/resources/cms/app.ts</code>.
-It uses a traditional MVC approach:</p>
+<p>The app function is by default located in <code>/src/main/resources/cms/app.ts</code>.
+It follows a simple three-step flow:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -622,7 +622,7 @@ export default App;</code></pre>
 <h2 id="output"><a class="link" href="#output">Output</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you take a closer look at the page markup produced by the app controller, you should see something like this:</p>
+<p>If you take a closer look at the page markup produced by the app function, you should see something like this:</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -661,7 +661,7 @@ The links have been shortened for better readability
 </div>
 </div>
 <div class="paragraph">
-<p>The result is the HTML string we passed to the  <code>render</code> request of our initial controller - but <strong>a lot of stuff</strong> has also been inserted.</p>
+<p>The result is the HTML string we passed to the  <code>render</code> request of our app function - but <strong>a lot of stuff</strong> has also been inserted.</p>
 </div>
 <div class="colist arabic">
 <table>
@@ -712,7 +712,7 @@ Most of these static assets are content-hashed, and optimized for client-side ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:48:42 UTC
+Last updated 2026-07-27 16:59:10 UTC
 </div>
 </div>
 </body>

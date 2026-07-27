@@ -538,7 +538,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="performance"><a class="link" href="#performance">SSR performance</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Apart from when assets are initialized during the engine <a href="#warmup">warmup</a>, each SSR should be fast. However, in cases where you need to improve SSR performance further, it can be done by wrapping the rendering in a <a href="https://developer.enonic.com/docs/cache-library">cache</a> in the controller.</p>
+<p>Apart from when assets are initialized during the engine <a href="#warmup">warmup</a>, each SSR should be fast. However, in cases where you need to improve SSR performance further, it can be done by wrapping the rendering in a <a href="https://developer.enonic.com/docs/cache-library">cache</a> in the app function.</p>
 </div>
 <div class="paragraph">
 <p>Be sure to use any value that can change the rendering output - usually from <code>props</code> (and <code>options</code>?) or a subset of them - as a <strong>key</strong> in the cache.</p>
@@ -591,7 +591,7 @@ exports.get = request =&gt; {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:48:42 UTC
+Last updated 2026-07-27 16:59:10 UTC
 </div>
 </div>
 </body>

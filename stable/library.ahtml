@@ -525,7 +525,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="invocation_example"><a class="link" href="#invocation_example">Invocation example</a></h3>
 <div class="paragraph">
-<p>A minimal controller passes an <a href="entries.ahtml">entry</a>, <code>props</code>, and the <code>request</code> to <code>render</code>. The return value is an XP response object you return directly:</p>
+<p>A minimal HTTP function passes an <a href="entries.ahtml">entry</a>, <code>props</code>, and the <code>request</code> to <code>render</code>. The return value is an XP response object you return directly:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -539,7 +539,7 @@ export function get(request: Request) {
 </div>
 </div>
 <div class="paragraph">
-<p><code>render</code> returns a <code>{body, pageContributions}</code> response object, so returning it straight from the controller both renders server-side and adds everything the browser needs to activate the react app. Each function and its options are documented below.</p>
+<p><code>render</code> returns a <code>{body, pageContributions}</code> response object, so returning it straight from the function both renders server-side and adds everything the browser needs to activate the react app. Each function and its options are documented below.</p>
 </div>
 </div>
 </div>
@@ -576,7 +576,7 @@ export function get(request: Request) {
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>entry</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">string | component object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Reference to an <a href="entries.ahtml">entry</a>: the react component to be rendered. <a href="entries.ahtml#jsxPath">JsxPath</a> reference - or if the entry is a TSX/JSX file with the <em>same name</em> in the <em>same folder</em> as the controller, you can use a <code>portal.getComponent()</code> object here. Corresponds to the template argument in <code>thymeleaf.render</code>.</p>
+<p>Reference to an <a href="entries.ahtml">entry</a>: the react component to be rendered. <a href="entries.ahtml#jsxPath">JsxPath</a> reference - or if the entry is a TSX/JSX file with the <em>same name</em> in the <em>same folder</em> as the component implementation, you can use a <code>portal.getComponent()</code> object here. Corresponds to the template argument in <code>thymeleaf.render</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -722,7 +722,7 @@ export function get(request: Request) {
 <div class="sect3">
 <h4 id="render_request"><a class="link" href="#render_request">Request and automated behavior</a></h4>
 <div class="paragraph">
-<p><code>.render</code> is intended to be convenient to work with and safely wrap around some common corner cases. It automates a little bit of behavior, depending on the <code>request</code> object argument (which stems from the XP controller):</p>
+<p><code>.render</code> is intended to be convenient to work with and safely wrap around some common corner cases. It automates a little bit of behavior, depending on the <code>request</code> object argument (which stems from the HTTP function):</p>
 </div>
 <div class="sect4">
 <h5 id="render_with_request"><a class="link" href="#render_with_request"><code>render</code> with <code>request</code>:</a></h5>
@@ -910,7 +910,7 @@ export const dataFetcher = new DataFetcher();</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Instantiate the <code>DataFetcher</code> once in its own module and import that instance where needed - both in the <a href="controller.ahtml">app controller</a> and in the React entry via <code>componentRegistry</code>. The constructor takes no arguments.
+Instantiate the <code>DataFetcher</code> once in its own module and import that instance where needed - both in the <a href="app.ahtml">app function</a> and in the React entry via <code>componentRegistry</code>. The constructor takes no arguments.
 </td>
 </tr>
 </table>
@@ -1110,7 +1110,7 @@ export const helloProcessor: ComponentProcessor&lt;PageDescriptor&gt; = (params)
 </tbody>
 </table>
 <div class="paragraph">
-<p>Pass the whole result straight to <code>render</code> - see the <a href="controller.ahtml">app controller</a>:</p>
+<p>Pass the whole result straight to <code>render</code> - see the <a href="app.ahtml">app function</a>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1228,7 +1228,7 @@ Registering a content-type processor is the shortcut for taking over a whole pag
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>entry</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">string | component object</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Reference to an <a href="entries.ahtml">entry</a>: the react component to be rendered. Direct <a href="entries.ahtml#jsxPath">JsxPath</a> string, or a <code>portal.getComponent()</code> object. If you use a component object like that, the entry must be a TSX/JSX file with the <em>same name</em> in the <em>same folder</em> as the controller, and react4xp will try to generate an ID from the content.</p>
+<p>Reference to an <a href="entries.ahtml">entry</a>: the react component to be rendered. Direct <a href="entries.ahtml#jsxPath">JsxPath</a> string, or a <code>portal.getComponent()</code> object. If you use a component object like that, the entry must be a TSX/JSX file with the <em>same name</em> in the <em>same folder</em> as the component implementation, and react4xp will try to generate an ID from the content.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1519,7 +1519,7 @@ Most of these rendering methods will lock down the jsxPath and ID of the react4x
 <p>Returns</p>
 </div>
 <div class="paragraph">
-<p>Returns an HTML string ready to return as the <code>body</code> attribute in a <a href="https://developer.enonic.com/docs/code/stable/web/request-response">response object</a> from the controller.</p>
+<p>Returns an HTML string ready to return as the <code>body</code> attribute in a <a href="https://developer.enonic.com/docs/code/stable/web/request-response">response object</a> from the function.</p>
 </div>
 <div class="paragraph">
 <p>The root of the returned HTML is always a <strong>surrounding container</strong> HTML that will have a matching-ID <strong>target element</strong> in it somewhere (an element matching the data object&#8217;s ID (<code>react4xpId</code>), either from the <a href="#set_id">ID setter methods</a>, or a generated ID if they haven&#8217;t been run). This surrounding structure is <code>options.body</code>, unchanged if that already contained a matching-ID element, or with a new target element generated and inserted at the end if it didn&#8217;t have one. If there is no <code>options.body</code>, the surrounding container is just a generated target element.</p>
@@ -1632,7 +1632,7 @@ Most of these rendering methods will lock down the jsxPath and ID of the react4x
 <p>Returns</p>
 </div>
 <div class="paragraph">
-<p>A regular <a href="https://developer.enonic.com/docs/code/stable/web/sites/contributions">page contributions</a> object, ready to be used as the <code>pageContributions</code> attribute in an <a href="https://developer.enonic.com/docs/code/stable/web/request-response">response object</a> from the controller.</p>
+<p>A regular <a href="https://developer.enonic.com/docs/code/stable/web/sites/contributions">page contributions</a> object, ready to be used as the <code>pageContributions</code> attribute in an <a href="https://developer.enonic.com/docs/code/stable/web/request-response">response object</a> from the function.</p>
 </div>
 <div class="paragraph">
 <p>Includes everything the browser needs to activate (or client-side render) the react component: script tags with urls to auto-compiled assets for the entry and its dependencies, a client-side react4xp wrapper asset and an activating trigger call to the client wrapper. Urls point to react4xp&#8217;s own optimized asset services. Also included before this, are any input <code>options.pageContributions</code>.</p>
@@ -1734,7 +1734,7 @@ Best case scenario: this might make a client-side rendered entry visible in Cont
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:48:42 UTC
+Last updated 2026-07-27 16:59:10 UTC
 </div>
 </div>
 </body>

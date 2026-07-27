@@ -507,7 +507,26 @@ apis: <i class="conum" data-value="3"></i><b>(3)</b>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The app function is by default located in <code>/src/main/resources/cms/app.ts</code>.
-It follows a simple three-step flow:</p>
+It exports <code>GET</code>, which XP&#8217;s site engine invokes for every request the <a href="#site-mapping">site mapping</a> catches:</p>
+</div>
+<div class="listingblock">
+<div class="title">/src/main/resources/cms/app.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {render} from '/lib/enonic/react4xp';
+import {getContent} from '/lib/xp/portal';
+import {dataFetcher} from '/react4xp/dataFetcher';
+import type {Request, Response} from '@enonic-types/core';
+
+export function GET(request: Request): Response {
+    // the three steps below
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Declare one export per HTTP method the function handles - <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>, <code>PATCH</code>, <code>HEAD</code>, <code>OPTIONS</code> - or <code>all</code> as a fallback for any method without its own export. See <a href="https://developer.enonic.com/docs/code/stable/web/request-response">Request &amp; Response</a> for the full contract.</p>
+</div>
+<div class="paragraph">
+<p>Inside, it follows a simple three-step flow:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -712,7 +731,7 @@ Most of these static assets are content-hashed, and optimized for client-side ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:05:44 UTC
+Last updated 2026-07-27 17:08:07 UTC
 </div>
 </div>
 </body>

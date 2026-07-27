@@ -1,0 +1,66 @@
+{
+  "menuItems": [
+    {
+      "title": "Overview",
+      "document": "index"
+    },
+    {
+      "title": "Starter",
+      "document": "starter"
+    },
+    {
+      "title": "Library",
+      "document": "library"
+    },
+    {
+      "title": "SSR engine",
+      "document": "ssr"
+    },
+    {
+      "title": "Hydration",
+      "document": "hydration"
+    },
+    {
+      "title": "Configuration",
+      "document": "config"
+    },
+    {
+      "title": "Build",
+      "document": "build"
+    },
+    {
+      "title": "Chunks",
+      "document": "chunks"
+    },
+    {
+      "title": "Entries",
+      "document": "entries",
+      "menuItems": [
+        {
+          "title": "Cheat sheet",
+          "document": "entries/cheatsheet"
+        },
+        {
+          "title": "Making an entry",
+          "document": "entries/howto"
+        }
+      ]
+    },
+    {
+      "title": "App.ts",
+      "document": "controller"
+    },
+    {
+      "title": "Macros",
+      "document": "macro-data"
+    },
+    {
+      "title": "Release Notes",
+      "document": "release"
+    },
+    {
+      "title": "Upgrade notes",
+      "document": "upgrade"
+    }
+  ]
+}

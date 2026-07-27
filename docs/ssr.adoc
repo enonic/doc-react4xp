@@ -70,7 +70,7 @@ const makeKey = props => {
 };
 
 
-exports.get = request => {
+exports.GET = request => {
     const props = {
         // ... build props from whatever sources are needed
     };

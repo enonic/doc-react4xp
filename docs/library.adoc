@@ -55,7 +55,7 @@ A minimal HTTP function passes an <<entries#, entry>>, `props`, and the `request
 import {React4xp} from '/lib/enonic/react4xp';
 import type {Request} from '@enonic-types/core';
 
-export function get(request: Request) {
+export function GET(request: Request) {
     // 'my-entry' is a JsxPath to a compiled react component
     return React4xp.render('my-entry', {greeting: 'Hello world'}, request);
 }
@@ -379,7 +379,7 @@ Call the two rendering methods from the same react4xp object. Remember, if using
 
 [source,javascript]
 ----
-exports.get = function(request) => {
+exports.GET = (request) => {
 
     // Object constructor:
     const myComponent = new React4xp('my-entry');

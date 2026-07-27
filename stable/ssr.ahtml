@@ -564,7 +564,7 @@ const makeKey = props =&gt; {
 };
 
 
-exports.get = request =&gt; {
+exports.GET = request =&gt; {
     const props = {
         // ... build props from whatever sources are needed
     };
@@ -591,7 +591,7 @@ exports.get = request =&gt; {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:59:10 UTC
+Last updated 2026-07-27 17:05:44 UTC
 </div>
 </div>
 </body>

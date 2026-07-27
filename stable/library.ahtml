@@ -532,7 +532,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight"><code class="language-typescript" data-lang="typescript">import {React4xp} from '/lib/enonic/react4xp';
 import type {Request} from '@enonic-types/core';
 
-export function get(request: Request) {
+export function GET(request: Request) {
     // 'my-entry' is a JsxPath to a compiled react component
     return React4xp.render('my-entry', {greeting: 'Hello world'}, request);
 }</code></pre>
@@ -1171,7 +1171,7 @@ Registering a content-type processor is the shortcut for taking over a whole pag
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">exports.get = function(request) =&gt; {
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">exports.GET = (request) =&gt; {
 
     // Object constructor:
     const myComponent = new React4xp('my-entry');
@@ -1734,7 +1734,7 @@ Best case scenario: this might make a client-side rendered entry visible in Cont
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 16:59:10 UTC
+Last updated 2026-07-27 17:05:44 UTC
 </div>
 </div>
 </body>

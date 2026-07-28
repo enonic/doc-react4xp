@@ -54,8 +54,7 @@ The starter sets `entryDirs: ['entries']`, so entries are picked up from _src/ma
 
 Adding comma separated values under `entryDirs` adds _more_ folder names/paths where TSX/JSX files will also become entries.
 
-NOTE: In legacy XP 7 apps, React4xp also scanned _src/main/resources/site/_ for entries by default.
-XP 8 apps no longer have this folder (it was renamed to `cms/`, which is not scanned for entries).
+NOTE: React4xp also scans _src/main/resources/site/_ for entries by default, in addition to the `entryDirs` folders.
 
 
 [[chunkDirs]]

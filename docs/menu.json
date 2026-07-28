@@ -55,8 +55,12 @@
       "document": "release"
     },
     {
-      "title": "Upgrade notes",
+      "title": "Recommended upgrade",
       "document": "upgrade"
+    },
+    {
+      "title": "Legacy mode upgrade",
+      "document": "legacy-upgrade"
     }
   ]
 }

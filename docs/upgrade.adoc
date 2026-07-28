@@ -1,124 +1,516 @@
-= Upgrade from XP 7 to XP 8
+= Recommended upgrade
 :toc: right
+:imagesdir: media/
 
-React4XP 7 runs on Enonic XP 8, which React4XP 6 applications runs on XP 7. Moving to React4XP 7 means upgrading the application itself from XP 7 to XP 8. This is a source-level upgrade, not an in-place version bump.
+This page covers upgrading an application from *React4XP 5 to 6*. It is the recommended route: it migrates pages and layouts to React and gives you the full React4XP 6 feature set. If you would rather upgrade the build and plumbing while keeping the version 5 rendering model, follow the <<legacy-upgrade#, legacy mode upgrade>> instead.
 
-The upgrade has two parts:
+NOTE: To go from React4XP 6 to 7, switch to the *7.x* documentation - that upgrade also moves the application from Enonic XP 7 to XP 8.
 
-. The standard *XP 7 to XP 8 application upgrade* - YAML descriptors, the new Gradle build and the code-level breaking changes. This is identical for any XP application and is covered by the generic guide.
-. A handful of *React4XP-specific* changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.
+== Step by step
 
-This page documents only part 2. Do the standard upgrade first, then apply the <<react4xp-specifics, React4XP specifics>> below.
+This describes upgrading to the full feature set of react4xp 6 including migrating pages and layouts to react.
 
-== Standard XP 7 to XP 8 upgrade
+. Create an app using the <<starter#, starter>> and give it a new name.
+. <<migrating-parts, Migrate>> each react component to the new app.
+. Migrate your <<migrate-page, page>> and <<migrate-layout, layout>> to react components
+. <<legacy-upgrade#build-deploy, Deploy>> the application on your existing site.
 
-Upgrade the application to XP 8 exactly as you would any other XP app - convert the XML descriptors to YAML, move to the new Gradle build, and apply the code-level breaking changes. The complete, up-to-date procedure and breaking-change list live in the canonical guide, so follow that rather than repeating it here:
+You will now have one application with your schemas, and one containing your frontend.
+If you prefer having a single application, follow these steps:
 
-TIP: https://developer.enonic.com/docs/code/stable/upgrade[Upgrading to XP 8^] - the generic XP 7 to XP 8 upgrade guide.
+. Move the cms schemas and other files you want to keep to the new application.
+. Rename it to the same name as your old application.
+. Make a production build and <<legacy-upgrade#build-deploy, Deploy>> it.
+. The old application can now be discarded.
 
-The fastest path through it is the *xp-app-upgrader* skill for https://claude.com/claude-code[Claude Code^]. 
+[[migrating-parts]]
+== Migrating parts
 
-[source]
+Now let’s go a little bit deeper and use the example component as a part along with our new components.
+To do this we need to do the following:
+
+. Make an xml file for it so XP knows that it exists, here we can also give it a good description.
++
+.src/main/resources/site/parts/example/example.xml
+[source,xml]
 ----
-/plugin marketplace add enonic/ai-enonic-marketplace
-/plugin install enonic-skills@enonic-marketplace
-----
-
-Then, from your application's project directory, ask Claude to upgrade it:
-
-NOTE: Neither the generic guide nor the skill covers the React4XP-specific steps below - apply them once the standard XP 8 upgrade builds cleanly.
-
-[[react4xp-specifics]]
-== React4XP specifics
-
-On top of the standard XP 8 upgrade, a React4XP application needs the following.
-
-=== Update the dependencies
-
-Move to the version 7 React4XP packages and the XP 8 types.
-
-.package.json
-[source,json]
-----
-"@enonic/react4xp": "7.0.0",
-"@enonic/react-components": "^7.0.0",
-"@enonic-types/lib-react4xp": "^7.0.0",
-"@enonic-types/global": "^8.0.3",
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<part>
+  <display-name>Example part</display-name>
+  <description>Example part description</description>
+</part>
 ----
 
-And the React4XP library in the Gradle build:
-
-.build.gradle
-[source,groovy]
+. Move the example component to the `parts/example` folder and update as follows.
++
+.src/main/resources/react4xp/components/parts/example/example.tsx
+[source,TypeScript]
 ----
-dependencies {
-    include 'com.enonic.lib:lib-react4xp:7.0.0'
+import Hello from '/lib/myReactComponents/Hello';
+import dayjs from 'dayjs';
+import React, {useState} from 'react';
+import type {ComponentProps, PartData} from '@enonic/react-components';
+
+export const Example = (props: ComponentProps<PartData>) => {
+
+    const [count, setCount] = useState(0);
+
+    return <>
+            <Hello/>
+            <div>Part: {dayjs().format()}</div>
+            <button onClick={() => setCount(prev => prev + 1)}>{count}</button>
+    </>;
+};
+
+
+export default Example;
+----
++
+Notice how the Example component receives `ComponentProps<PartData>` type props.
+This is going to be true for any other component as well, except that `PartData`, specifying type of the component field, will be `LayoutData` for layouts, or `PageData` for pages:
++
+[source,TypeScript]
+----
+interface ComponentProps<T extends ComponentData = ComponentData> {
+    meta: MetaData;                         // <1>
+    component: T;                           // <2>
+    data?: Record<string, unknown>;         // <3>
+    common?: Record<string, unknown>;       // <4>
 }
 ----
 
-NOTE: `@enonic-types/global` 8 brings in `@enonic-types/core`, which replaces the old `@enonic/js-utils` request type - see <<update-types, Update to the new types>> below.
-
-=== Mount the React4XP API
-
-XP 8 serves React4XP's compiled assets and SSR endpoints through a `react4xp` web API that must be mounted in the site descriptor - and in any webapp or admin tool that renders React4XP:
-
-.src/main/resources/cms/site.yaml
-[source,yaml]
+<1> Runtime metadata, such as the current content path, id and type as well as request mode.
+<2> Enonic XP component data that contains type, descriptor and some extra data based on the type (i.e. regions for layouts and pages).
+<3> Component data fetched by the associated data processor, if any.
+<4> Common data fetched by the common processor, if any.
++
+. Now, instead of fetching in get(), create a processor that returns its data and React4xp will forward it to your view along with some additional data like meta and component.
++
+.src/main/resources/react4xp/components/parts/example/exampleProcessor.ts
+[source,TypeScript]
 ----
-kind: "Site"
-apis:
-  - "asset"
-  - "react4xp"
+import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
+
+export const exampleProcessor: ComponentProcessor<'com.enonic.app.react4xp:example'> = (props) => {
+    return {};
+};
 ----
 
-=== Switch to the new build tooling
-
-React4XP 7 changes how the application is compiled:
-
-* Server-side TypeScript is compiled with https://tsdown.dev[tsdown^] - add `tsdown` and `@swc/core` to `devDependencies`.
-React entries (`.tsx`) are still compiled by React4XP with Rspack.
-* React4XP uses Rspack's native CSS support, so the old `mini-css-extract-plugin` is gone.
-CSS Modules work out of the box for `*.module.css` and `*.module.scss` files.
-
-TIP: The easiest way to get the exact, up-to-date build configuration (`tsdown.config.ts`, `react4xp.config.js`, `webpack.config.react4xp.js` and the `tsconfig.json` files) is to copy them from the https://github.com/enonic/starter-react4xp[React4XP starter^].
-
-Update the npm scripts so the build runs tsdown (server code and client assets) and React4XP (the `.tsx` entries), with the type checks split into the React4XP and server projects:
-
-.package.json
-[source,json]
+. Add it to the componentRegistry and dataFetcher with the same descriptor as in previous task.
++
+.src/main/resources/react4xp/componentRegistry.ts
+[source,TypeScript]
 ----
-"scripts": {
-  "build":                "tsdown",
-  "build:react4xp":       "npm explore @enonic/react4xp -- npm run build:react4xp",
-  "check":                "concurrently -c auto -g --timings npm:check:types:*",
-  "check:types:react4xp": "npx tsc --noEmit -p src/main/resources/react4xp/tsconfig.json",
-  "check:types:server":   "npx tsc --noEmit -p src/main/resources/tsconfig.json"
+import {ComponentRegistry} from '@enonic/react-components';
+import Example from './components/parts/example/example';
+
+...
+
+export const componentRegistry = new ComponentRegistry();
+
+...
+
+componentRegistry.addPart('com.enonic.app.react4xp:example', {View: Example});
+----
++
+.src/main/resources/react4xp/dataFetcher.ts
+[source,TypeScript]
+----
+import {DataFetcher} from '/lib/enonic/react4xp';
+import {exampleProcessor} from './components/parts/example/exampleProcessor';
+
+...
+
+export const dataFetcher = new DataFetcher();
+
+...
+
+dataFetcher.addPart('com.enonic.app.react4xp:example', {processor: exampleProcessor});
+----
+
+[[page-layout]]
+[[migrate-page]]
+== Pages
+
+Your current page part might look something like this:
+
+.src/main/resources/site/pages/default/default.tsx
+[source,typeScript]
+----
+import {Regions} from '@enonic/react-components';
+import dayjs from 'dayjs';
+import React from 'react';
+import type {PageComponentProps} from './default.d';
+
+function Page(props: PageComponentProps) {
+    return (
+        <div className="default-page">
+            <Regions {...props} />
+            <div>Page: {dayjs().format()}</div>
+        </div>
+    );
+}
+
+export default (props: PageComponentProps) => <Page {...props}/>;
+----
+
+with a controller like this:
+
+.src/main/resources/site/pages/default/default.ts
+[source,TypeScript]
+----
+import {render} from '/lib/enonic/react4xp';
+import {getContent} from '/lib/xp/portal';
+import type {Enonic} from '@enonic/js-utils/types/Request';
+import type {PageComponentProps} from './default.d';
+
+
+export function get(request: Enonic.Xp.Http.Request) {
+    const content = getContent();
+
+    const {page: entry} = content;
+
+    const react4xpId = `react4xp_${content._id}`;
+
+    const props: PageComponentProps = {
+        regionsData: content.page.regions,
+        names: "main",
+        tag: "main",
+    };
+
+    const htmlBody = `<!DOCTYPE html><html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>${content.displayName}</title>
+	</head>
+	<body class="xp-page">
+		<div id="${react4xpId}"></div>
+	</body>
+</html>`;
+
+    const output = render(
+        entry,
+        props,
+        request,
+        {
+            body: htmlBody,
+            hydrate: false,
+            id: react4xpId,
+        }
+    );
+
+    return output;
 }
 ----
 
-[[update-types]]
-=== Update to the new types
+And an xml like this:
 
-React4XP 7 builds on `@enonic-types/core`.
-In your functions and processors, replace `Enonic.Xp.Http.Request` from `@enonic/js-utils/types/Request` with `Request` from `@enonic-types/core`.
+.src/main/resources/site/pages/default/default.xml
 
-== Build and deploy
-
-Make a production build and deploy it to your sandbox:
-
-[source,shell]
+[source,xml]
 ----
-enonic project build
-----
-
-[source,shell]
-----
-enonic project deploy
+<page>
+  <display-name>Default page</display-name>
+  <description>R4xp5 react-rendered page controller</description>
+  <form/>
+  <regions>
+    <region name="main"/>
+  </regions>
+</page>
 ----
 
-You can also run the project in development mode, which watches for changes and automatically deploys them to the sandbox:
+This is how we migrate it to a react4xp v6 component:
 
-[source,shell]
+First let's handle the controller which becomes a processor, the most important prop to pass from the processor used to be the regionsData.
+We can still get regions from component and return it, but this is not necessary anymore!
+
+IMPORTANT: Component gets passed to the view automatically now, so you don't have to define a processor function if it's only regions you want to access.
+
+.src/main/resources/react4xp/components/page/PageProcessor.ts
+[source,TypeScript]
 ----
-enonic dev
+import {PageComponent} from "@enonic-types/core";
+import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
+
+export const pageProcessor: ComponentProcessor<'com.enonic.app.react4xp:Page'> = (props) => {
+    const {regions} = props.component as PageComponent;
+
+    return {
+        regions,
+        name: "main"
+    };
+};
 ----
+
+Next we need to change out the part `default.tsx` with a component `Page.tsx`, which is very similar except that we pass `component` to the `Regions` react component, because it contains regions now.
+
+.src/main/resources/react4xp/components/page/Page.tsx
+[source,TypeScript]
+----
+import {Regions, type ComponentProps, type PageData} from '@enonic/react-components';
+import dayjs from 'dayjs';
+import styles from './Page.module.css';
+
+export const Page = ({data, common, meta, component}: ComponentProps<PageData>) => {
+
+    return (
+        <div className={styles[data.name as string]}>
+            <Regions common={common} meta={meta} component={component}/>
+            <div>Page: {dayjs().format()}</div>
+        </div>
+    );
+};
+----
+
+In this example there is also a css module that is used to style the page.
+
+.src/main/resources/react4xp/components/page/Page.module.css
+[source,css]
+----
+.main {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  display: flow-root;
+}
+----
+
+For XP to see it we need to keep the xml file, but we will change the name to `Page.xml` and add a description to it.
+This way we can call on it using a descriptor in the component registry and data fetcher.
+
+.src/main/resources/site/pages/Page/Page.xml
+[source,xml]
+----
+<page>
+  <display-name>Upgraded page</display-name>
+  <description>Upgraded page component</description>
+  <form/>
+  <regions>
+    <region name="main"/>
+  </regions>
+</page>
+----
+
+Let's add it to componentRegistry and dataFetcher, this is done in the same way as we did with the part.
+
+.src/main/resources/react4xp/componentRegistry.ts
+[source,TypeScript]
+----
+import {ComponentRegistry} from '@enonic/react-components';
+import {Page} from './components/page/Page';
+
+...
+
+export const componentRegistry = new ComponentRegistry();
+
+...
+
+componentRegistry.addPage('com.enonic.app.react4xp:Page', {View: Page});
+----
+
+.src/main/resources/react4xp/dataFetcher.ts
+[source,TypeScript]
+----
+import {DataFetcher} from '/lib/enonic/react4xp';
+import {pageProcessor} from './components/page/PageProcessor';
+
+...
+
+export const dataFetcher = new DataFetcher();
+
+...
+
+dataFetcher.addPage('com.enonic.app.react4xp:Page', {processor: pageProcessor});
+----
+
+Now we have a fully functional page component that is using the new regions and component registry.
+
+[[migrate-layout]]
+== Layouts
+
+Lastly we need to migrate the layout, this is done in a similar way to the page.
+
+Your current layout part might look something like this:
+
+.src/main/resources/site/layouts/twoColumns/twoColumns.tsx
+[source,typeScript]
+----
+import {Regions} from '@enonic/react-components';
+import dayjs from 'dayjs';
+import React from 'react';
+
+export default (props: Parameters<typeof Regions>[0]) => {
+    return <div style={{
+        columnGap: '1em',
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr'
+    }}>
+        <Regions {...props}/>
+        <div>{dayjs().format()}</div>
+    </div>;
+};
+----
+
+with a controller like this:
+
+.src/main/resources/site/layouts/twoColumns/twoColumns.ts
+[source,TypeScript]
+----
+import {render} from '/lib/enonic/react4xp';
+import {getComponent} from '/lib/xp/portal';
+import type {Enonic} from '@enonic/js-utils/types/Request';
+import type {Regions} from '@enonic/react-components';
+
+
+export function get(request: Enonic.Xp.Http.Request) {
+
+    const component = getComponent();
+
+    const props: Parameters<typeof Regions>[0] = {
+        classes: true,
+        names: ['left', 'right'],
+        regionsData: component.regions,
+        tags: 'section',
+    };
+
+    return render(
+        component,
+        props,
+        request,
+        {
+            hydrate: false,
+        }
+    );
+}
+----
+
+And an xml like this:
+
+.src/main/resources/site/layouts/twoColumns/twoColumns.xml
+[source,xml]
+----
+<layout>
+  <display-name>Two columns</display-name>
+  <description>Two columns react-rendered layout controller</description>
+  <form/>
+  <regions>
+    <region name="left"/>
+    <region name="right"/>
+  </regions>
+</layout>
+----
+
+Similar to the page, we need to implement a processor, and a component.
+
+.src/main/resources/react4xp/components/layouts/TwoColumnProcessor.ts
+[source,TypeScript]
+----
+import {LayoutComponent} from '@enonic-types/core';
+import type {ComponentProcessor} from '@enonic-types/lib-react4xp/DataFetcher';
+
+
+export const layoutProcessor: ComponentProcessor<'com.enonic.app.react4xp:TwoColumns'> = ({component}) => {
+    const {regions} = component as LayoutComponent;
+
+    return {
+        regions,
+        tags: 'section'
+    };
+};
+----
+
+The Layout component is depending on regions like the page, but let's use `Region` built-in component this time to render every region manually.
+We need to pass list of components as data to each `Region` component:
+
+.src/main/resources/react4xp/components/layouts/TwoColumn.tsx
+[source,TypeScript]
+----
+import {type ComponentProps, type LayoutData, Region} from '@enonic/react-components';
+import dayjs from 'dayjs';
+import styles from './TwoColumn.module.css';
+
+
+export const TwoColumnLayout = ({component, meta, data}: ComponentProps<LayoutData>) => {
+
+    return <>
+        <div className={styles.row + ' ' + styles[data.tags as string]}>
+            <Region data={component.regions.left.components} meta={meta} name="left"/>
+            <Region data={component.regions.right.components} meta={meta} name="right"/>
+        </div>
+        <div>Layout:{dayjs().format()}</div>
+    </>;
+};
+----
+
+NOTE: Notice how we used data fetcher result stored in `data` field to access the `tags` property.
+
+.src/main/resources/components/layouts/twoColumn.css
+[source,css]
+----
+.section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.section :global(> div) {
+  flex: 1;
+  min-width: 200px;
+}
+
+.section :global(.xp-page-editor-region-placeholder) {
+  margin-bottom: 0;
+}
+----
+
+We need to add the layout to the component registry and data fetcher, this is done in the same way as we did with the part and page.
+
+.src/main/resources/react4xp/componentRegistry.ts
+[source,TypeScript]
+----
+import {ComponentRegistry} from '@enonic/react-components';
+import {TwoColumnLayout} from './components/layouts/TwoColumn';
+
+...
+
+export const componentRegistry = new ComponentRegistry();
+
+...
+
+componentRegistry.addLayout('com.enonic.app.react4xp:TwoColumns', {View: TwoColumnLayout});
+----
+
+.src/main/resources/react4xp/dataFetcher.ts
+[source,TypeScript]
+----
+import {DataFetcher} from '/lib/enonic/react4xp';
+import {layoutProcessor} from './components/layouts/TwoColumnProcessor';
+
+...
+
+export const dataFetcher = new DataFetcher();
+
+...
+
+dataFetcher.addLayout('com.enonic.app.react4xp:TwoColumns', {processor: layoutProcessor});
+----
+
+And finally we need to update the xml file to match the descriptor, this is done in the same way as the page.
+
+.src/main/resources/site/layouts/TwoColumn/TwoColumn.xml
+[source,xml]
+----
+<layout>
+  <display-name>Two columns</display-name>
+  <description>Upgraded Two columns controller</description>
+  <form/>
+  <regions>
+    <region name="left"/>
+    <region name="right"/>
+  </regions>
+</layout>
+----
+
+Now we have a fully functional layout component that is using the new regions and component registry.
+
+And just like that we have not only upgraded the old component, but also made it compatible with the new ones!

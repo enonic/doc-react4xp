@@ -34,17 +34,19 @@ import {React4xp} from '/lib/enonic/react4xp';
 
 Individual functions can also be imported directly, e.g. `import {render, processHtml} from '/lib/enonic/react4xp'`.
 
-[[mount-api]]
-=== Mount the API
+[[asset-serving]]
+=== Asset serving
 
-React4XP 7 (and newer) uses XP 8's universal API functionality, serving its compiled assets and SSR endpoints through a `react4xp` web API. This API must be *mounted* in the context descriptor (i.e. site, `webapp` or `admin tool` where React4XP is used). Parts, layouts and pages inherit it from their context and don't declare it themselves. Without it, the browser can't load React4XP's assets and rendering won't work.
+React4XP 6 serves its compiled assets and SSR endpoints through two XP *services* that ship inside the library itself:
 
-.Adding API to src/main/resources/cms/site.yaml
-[source,yaml]
-----
-apis:
-  - "react4xp"
-----
+`react4xp`:: serves the compiled entry, chunk and client assets
+`react4xp-dependencies`:: serves the dependency manifest the client needs
+
+Because they are services rather than APIs, they are addressable as soon as the library is on the classpath - there is nothing to declare or mount in `site.xml`.
+
+Use <<#serviceurl, `serviceUrl`>> if you need to build a URL to a service yourself. The library's own URL helpers - `assetUrl`, `getClientUrl` and `getExecutorUrl` - are built on it.
+
+NOTE: React4XP 7 replaces these services with an XP 8 *universal API*, which must be explicitly mounted. If you are upgrading, see <<upgrade#, Upgrade notes>>.
 
 [[invocation-example]]
 === Invocation example
@@ -56,7 +58,7 @@ A minimal HTTP function passes an <<entries#, entry>>, `props`, and the `request
 import {React4xp} from '/lib/enonic/react4xp';
 import type {Request} from '@enonic-types/core';
 
-export function GET(request: Request) {
+export function get(request: Request) {
     // 'my-entry' is a JsxPath to a compiled react component
     return React4xp.render('my-entry', {greeting: 'Hello world'}, request);
 }
@@ -219,6 +221,32 @@ export const paragraphProcessor: ComponentProcessor<'com.enonic.app.hmdb:paragra
 };
 ----
 
+[[serviceurl]]
+=== serviceUrl
+
+Builds a URL to an XP service. React4XP uses it internally to serve its own assets, and it is exported for cases where you need a service URL of your own with React4XP's URL-type handling applied.
+
+[source,TypeScript]
+----
+import {serviceUrl} from '/lib/enonic/react4xp';
+
+const url = serviceUrl({service: 'myService'});
+----
+
+[%header,cols="1%,1%,98%a"]
+[frame="none"]
+[grid="none"]
+|===
+| Name | Type | Description
+| `service` | string | *Required.* Name of the service to link to.
+| `path` | string | *Optional.* Path appended to the service URL. Defaults to `/`.
+| `params` | object | *Optional.* Query parameters to add to the URL.
+| `application` | string | *Optional.* Application the service belongs to. Defaults to the current app (`app.name`).
+| `type` | `server` \| `absolute` | *Optional.* URL type. Defaults to `+app.config['react4xp.urlType']+` - see <<config#, Configuration>>.
+|===
+
+NOTE: `serviceUrl` is removed in React4XP 7, where assets are served through an XP 8 universal API instead of services.
+
 == Classes
 
 [[data_fetcher]]
@@ -380,7 +408,7 @@ Call the two rendering methods from the same react4xp object. Remember, if using
 
 [source,javascript]
 ----
-exports.GET = (request) => {
+exports.get = (request) => {
 
     // Object constructor:
     const myComponent = new React4xp('my-entry');

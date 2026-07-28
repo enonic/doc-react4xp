@@ -9,7 +9,7 @@ TIP: *New to React4XP?* Visit our https://developer.enonic.com/learn/react4xp-tu
 
 React4XP lets front-end developers build *Enonic XP applications with React*. React components are rendered <<ssr#, server-side>> and then <<ssr#hydration, hydrated>> in the browser by default, so the same React code runs on both the server and the client (isomorphic rendering).
 
-NOTE: This documentation covers *React4XP 7.x*, which builds on *React 19* and requires *Enonic XP 8*.
+NOTE: This documentation covers *React4XP 6.x*, which builds on *React 19* and requires *Enonic XP 7.16* or later. For the current version, switch to the *7.x* docs.
 
 
 == How React4XP is distributed
@@ -17,7 +17,7 @@ NOTE: This documentation covers *React4XP 7.x*, which builds on *React 19* and r
 React4XP comes in two parts:
 
 *Library* (`lib-react4xp`)::
-The Enonic XP library that does the rendering. It exposes the `render` and `processHtml` functions, the `DataFetcher` class and the `React4xp` object - all documented in the <<library#, Library reference>>. Available on https://market.enonic.com/vendors/enonic/react4xp-lib[Enonic Market] and https://github.com/enonic/lib-react4xp[GitHub]. Your React sources are compiled by the companion npm build tool `@enonic/react4xp` (https://www.npmjs.com/package/@enonic/react4xp[npm]).
+The Enonic XP library that does the rendering. It exposes the `render`, `processHtml`, `assetUrl` and `serviceUrl` functions, the `DataFetcher` class and the `React4xp` object - all documented in the <<library#, Library reference>>. Available on https://market.enonic.com/vendors/enonic/react4xp-lib[Enonic Market] and https://github.com/enonic/lib-react4xp[GitHub]. Your React sources are compiled by the companion npm build tool `@enonic/react4xp` (https://www.npmjs.com/package/@enonic/react4xp[npm]).
 
 *Starter* (`starter-react4xp`)::
 A ready-to-run project that bundles the library, the `@enonic/react4xp` build integration, and a Hello world setup - so `enonic project create` gives you a working React4XP setup in one step. Documented in the <<starter#, Starter reference>>; available on https://market.enonic.com/starters/react4xp-starter[Enonic Market^] and https://github.com/enonic/starter-react4xp[GitHub^].

@@ -471,7 +471,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>The React4xp library (<a href="https://market.enonic.com/vendors/enonic/react4xp-lib">Enonic Market</a>) exposes a few functions, the <a href="#data_fetcher">DataFetcher</a> class and a <code>React4xp</code> object that can be used in your Enonic app.</p>
 </div>
 <div class="paragraph">
-<p>For the <a href="ssr.ahtml">SSR engine</a> and <a href="hydration.ahtml">hydration</a>, and for compilation and runtime <a href="config.ahtml">configuration</a>, see the respective chapters.</p>
+<p>For the <a href="ssr.ahtml">SSR engine</a> and <a href="ssr.ahtml#hydration">hydration</a>, and for compilation and runtime <a href="config.ahtml">configuration</a>, see the respective chapters.</p>
 </div>
 </div>
 </div>
@@ -1734,7 +1734,7 @@ Best case scenario: this might make a client-side rendered entry visible in Cont
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:08:07 UTC
+Last updated 2026-07-28 06:31:25 UTC
 </div>
 </div>
 </body>

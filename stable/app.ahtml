@@ -710,7 +710,7 @@ The links have been shortened for better readability
 </tr>
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>Script that triggers <code>hydration</code> - more on this in the next chapter</td>
+<td>Script that triggers <code>hydration</code> - see <a href="ssr.ahtml#hydration">Hydration</a></td>
 </tr>
 </table>
 </div>
@@ -731,7 +731,7 @@ Most of these static assets are content-hashed, and optimized for client-side ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:08:07 UTC
+Last updated 2026-07-28 06:31:25 UTC
 </div>
 </div>
 </body>

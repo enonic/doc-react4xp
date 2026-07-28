@@ -442,6 +442,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#how_it_works">How it works</a></li>
+<li><a href="#hydration">Hydration</a>
+<ul class="sectlevel2">
+<li><a href="#controlling_ssr_and_hydration">Controlling SSR and hydration</a></li>
+<li><a href="#isomorphic-gotchas">Server- and client-side gotchas</a></li>
+</ul>
+</li>
 <li><a href="#renderers">Renderers</a></li>
 <li><a href="#warmup">Warmup time</a>
 <ul class="sectlevel2">
@@ -456,7 +462,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default React4XP will render your React components on the server, and send the resulting HTML to the browser</p>
+<p>By default React4XP renders your React components on the server, sends the resulting HTML to the browser, and then hydrates them into live React apps in the browser</p>
 </div>
 </div>
 </div>
@@ -470,7 +476,89 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>In a nutshell, source files like TSX and JSX are compiled into JS assets that lib-react4xp&#8217;s SSR engine runs to render HTML. This output is then delivered to the browser along with dependency code (usually references to necessary assets like CSS, JS etc) - these dependencies are also rendered, as page contributions. Rendering the HTML body and the page contributions happens to two different steps, using either <a href="library.ahtml#react4xp_render"><code>render</code></a> (which wraps both steps for convenience) or the <a href="library.ahtml#react4xp_object">"custom flow"</a>.</p>
 </div>
 <div class="paragraph">
-<p>The aim of react4xp is <a href="https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905">isomorphic rendering</a>: after the react component(s) are serverside rendered, they are activated (<a href="hydration.ahtml">hydrated</a>) in the browser, turning them into running, active react apps. It&#8217;s <em>the same react code</em> that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browserspecific code from running on the server).</p>
+<p>The aim of react4xp is <a href="https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905">isomorphic rendering</a>: after the react component(s) are serverside rendered, they are activated (<a href="#hydration">hydrated</a>) in the browser, turning them into running, active react apps. It&#8217;s <em>the same react code</em> that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browserspecific code from running on the server).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hydration"><a class="link" href="#hydration">Hydration</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default React4XP renders entries both server-side and client-side: the HTML is rendered on the server first, then <strong>hydrated</strong> - activated - in the browser. You can also switch to server-side only, or client-side only.</p>
+</div>
+<div class="sect2">
+<h3 id="controlling_ssr_and_hydration"><a class="link" href="#controlling_ssr_and_hydration">Controlling SSR and hydration</a></h3>
+<div class="paragraph">
+<p>The mode is set per rendering, through the <code>options</code> argument of <a href="library.ahtml#react4xp_render"><code>render</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">const output = render(
+  'MyComponent',
+  props,
+  request,
+  {
+    body: myHtmlBody,
+    id: myId,
+    ssr: true, <i class="conum" data-value="1"></i><b>(1)</b>
+    hydrate: true <i class="conum" data-value="2"></i><b>(2)</b>
+  }
+);
+
+return output;</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set to <code>false</code> to disable server-side rendering</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set to <code>false</code> to disable client-side rendering</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Both default to the matching <a href="config.ahtml">application config</a> value - <code>react4xp.ssr</code> and <code>react4xp.hydrate</code> - which are themselves <code>true</code> unless you set them. See the <a href="library.ahtml#react4xp_render_parameters">render parameters</a> for the full option list.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="isomorphic-gotchas"><a class="link" href="#isomorphic-gotchas">Server- and client-side gotchas</a></h3>
+<div class="paragraph">
+<p>When using isomorphic JavaScript, selected features may only be working on server-side, and some only on client side, like <code>document</code> and <code>window</code> - which are pure client-side concepts. React4xp has polyfilled <code>window</code> as <em>empty object</em>. To prevent weird behavior or errors, take care to only execute browser-specific code in the browser.</p>
+</div>
+<div class="paragraph">
+<p>For example, the click counter in the starter&#8217;s <code>Hello</code> component is compiled and read into memory on the server, but its click handler is never triggered to actually <em>run</em> there - so it needs no extra safeguard. Where you do need one, it&#8217;s easy enough:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-javascript" data-lang="javascript">if (typeof window.navigator !== 'undefined') {
+    // ...This won't run during SSR...
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course, this also applies to imported packages / nested components and so on. Importing them is usually safe, but consider wrapping the areas where they&#8217;re called/used.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Your React components may produce server-side errors, but these are not always easily interpreted.</p>
+</div>
+<div class="paragraph">
+<p>Switching over to pure <em>clientside rendering</em> (by setting SSR false, Hydrate true) in your app function, the particular React component will likely give you a better/sourcemapped error message in the browser console, making your debugging life easier.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
@@ -591,7 +679,7 @@ exports.GET = request =&gt; {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:08:07 UTC
+Last updated 2026-07-28 06:31:25 UTC
 </div>
 </div>
 </body>

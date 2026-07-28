@@ -450,7 +450,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>React4XP lets front-end developers build <strong>Enonic XP applications with React</strong>. React components are rendered <a href="ssr.ahtml">server-side</a> and then <a href="hydration.ahtml">hydrated</a> in the browser by default, so the same React code runs on both the server and the client (isomorphic rendering).</p>
+<p>React4XP lets front-end developers build <strong>Enonic XP applications with React</strong>. React components are rendered <a href="ssr.ahtml">server-side</a> and then <a href="ssr.ahtml#hydration">hydrated</a> in the browser by default, so the same React code runs on both the server and the client (isomorphic rendering).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -513,7 +513,7 @@ New to React4XP? Start with the <a href="https://developer.enonic.com/learn/reac
 <p><a href="library.ahtml">Library reference</a> - the <code>render</code> / <code>processHtml</code> functions and the <code>React4xp</code> object.</p>
 </li>
 <li>
-<p><a href="ssr.ahtml">SSR engine</a> and <a href="hydration.ahtml">Hydration</a> - how server- and client-side rendering work.</p>
+<p><a href="ssr.ahtml">SSR engine</a> - server-side rendering, <a href="ssr.ahtml#hydration">hydration</a> and the rendering internals.</p>
 </li>
 <li>
 <p><a href="config.ahtml">Configuration</a>, <a href="build.ahtml">Build</a>, <a href="chunks.ahtml">Chunks</a> and <a href="entries.ahtml">Entries</a> - compilation and runtime internals.</p>
@@ -531,7 +531,7 @@ New to React4XP? Start with the <a href="https://developer.enonic.com/learn/reac
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-27 17:08:07 UTC
+Last updated 2026-07-28 06:31:25 UTC
 </div>
 </div>
 </body>

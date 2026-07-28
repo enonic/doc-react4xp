@@ -46,6 +46,7 @@ apis:
   - "react4xp"
 ----
 
+[[invocation-example]]
 === Invocation example
 
 A minimal HTTP function passes an <<entries#, entry>>, `props`, and the `request` to `render`. The return value is an XP response object you return directly:
@@ -161,13 +162,13 @@ When `request` is omitted, `.render` will ** never output error messages from SS
 [.lead]
 Examples
 
-Most of the lessons in the guide use `React4xp.render` (except the "custom flow" ones). For example https://developer.enonic.com/learn/react4xp-tutorial[here] or https://developer.enonic.com/learn/react4xp-tutorial[here].
+See the <<#invocation-example, invocation example>> above for the minimal case, and the <<#react4xp_object, React4xp object>> when you need the two rendering steps separately.
 
 [[processhtml]]
 === processHtml
 
 Transforms raw rich text HTML (typically the value of an `HtmlArea` input) into the `RichTextData` format consumed by the `RichText` component from `@enonic/react-components` - resolving links, sizing images and preparing macros for rendering.
-Typically used inside a data processor, like in the https://developer.enonic.com/learn/react4xp-tutorial[Pages] chapter.
+Typically used inside a data processor, like in the https://developer.enonic.com/learn/react4xp-tutorial[React4XP tutorial].
 
 [.lead]
 Parameters
@@ -402,7 +403,7 @@ exports.GET = (request) => {
 }
 ----
 
-See the https://developer.enonic.com/learn/react4xp-tutorial[custom flow syntax] lesson to go more in depth.
+The methods and options are documented in full below, starting with the <<#constructor, constructor>>.
 
 The setter methods (below) are all optional; if not used, the object renders with empty values or placeholders where needed, along the same logic as <<#react4xp_render, `render`>>. They all *return the data object itself*, so you can chain them in a *builder pattern*: `myComponent.setProps(...).setId(...)`. The order doesn't matter - except for `setId` and `uniqueId`, which affect each other.
 
@@ -531,7 +532,7 @@ Similar to <<#react4xp_render, `render`>> above, but `renderBody` in itself **_o
 ====
 Does _not_ render page contributions. Combine with a corresponding <<#render_pgcontr, renderPageContributions>> call from the same data object, or the rendering will not be active in the browser.
 
--> See the https://developer.enonic.com/learn/react4xp-tutorial[custom flow syntax] examples.
+-> See <<#react4xp_object_request, Request and automated behavior>> for the custom flow examples.
 ====
 
 `renderBody` renders based on the state of the data object reached at the time of rendering.
@@ -615,7 +616,7 @@ With a serverside rendering (`options.ssr` is not false), the client will expect
 [[react4xp_object_request]]
 ==== Request and automated behavior
 
-The https://developer.enonic.com/learn/react4xp-tutorial["custom flow"] (`.renderBody` in tandem with `.renderPageContributions`) is intended as a more low-level approach: less hand-holding, more control to the developer for cases where that's needed.
+The "custom flow" (`.renderBody` in tandem with `.renderPageContributions`) is intended as a more low-level approach: less hand-holding, more control to the developer for cases where that's needed.
 
 However, lib-react4xp version 1.6.0 introduced support for a `request` option parameter for these methods as well. The main idea is that **using `request` in both calls will now automate some behavior** the same way as calling `.render` with `request` (see <<render_request, above>>).
 
@@ -659,6 +660,4 @@ NOTE: This risks a missing/empty visualization inside Content Studio, since `ssr
 +
 NOTE: Best case scenario: this might make a client-side rendered entry visible in Content Studio too. Worst case, it risks intervening with Content Studio's UX, or even break its functionality, depending on the code used/imported by the entry.
 
-==== Custom flow examples
-
-Custom flow usage in is demonstrated https://developer.enonic.com/learn/react4xp-tutorial[here].
+TIP: For a complete custom flow function, see the <<#react4xp_object, usage example>> at the start of this section.

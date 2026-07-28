@@ -46,7 +46,7 @@ React4xp handles them in build-time and runtime: locates entries, compiles each 
 
 For example, early in this tutorial we've seen the entries _hello-react.jsx_ and _color.jsx_, they are compiled into the assets _hello-react.js_ and _color.js_.
 
-When rendered (whether it's by using `.render` or a pair of `renderBody`/`renderPageContributions` in the https://developer.enonic.com/learn/react4xp-tutorial[custom flow syntax]), each entry will become not only assets of their own, but *independent root level react apps* in the browser memory! Good to know if you display more than one entry on a page - which you can, but you might also consider using just one entry for the root, and multiple imports in it.
+When rendered (whether it's by using `.render` or a pair of `renderBody`/`renderPageContributions` in the <<library#react4xp_object, custom flow>>), each entry will become not only assets of their own, but *independent root level react apps* in the browser memory! Good to know if you display more than one entry on a page - which you can, but you might also consider using just one entry for the root, and multiple imports in it.
 
 
 
@@ -130,7 +130,7 @@ Short and brutal: the jsxPath is a name string generated from the path and filen
 == From source file location to jsxPath
 During development though, these 3 rules are probably easier:
 
-. If you use `portal.getComponent()` to insert a component object (like `entry` in https://developer.enonic.com/learn/react4xp-tutorial[the first example]), you can ignore the jsxPath and let the component object do the job: `React4xp.render` will use it to look for an entry with *the same name, in the same folder*, as a part/page/layout implementation.
+. If you use `portal.getComponent()` to insert a component object (like `entry` in the https://developer.enonic.com/learn/react4xp-tutorial[React4XP tutorial]), you can ignore the jsxPath and let the component object do the job: `React4xp.render` will use it to look for an entry with *the same name, in the same folder*, as a part/page/layout implementation.
 
 But if you need to access an entry with a particular name or from a different folder (from anywhere in the compiled JAR, actually), here's *how to find the jsxPath of an entry*:
 

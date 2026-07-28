@@ -44,7 +44,7 @@ In legacy XP 7 apps, entries could also be placed below *_/site/_* - XP 8 apps n
 == Entries, assets and react apps
 React4xp handles them in build-time and runtime: locates entries, compiles each entry into its own *entry asset* (under _/build/resources/main/r4xAssets_). React4xp's render methods also generate page contributions that make sure these assets are served to the client.
 
-For example, early in this tutorial we've seen the entries _hello-react.jsx_ and _color.jsx_, they are compiled into the assets _hello-react.js_ and _color.js_.
+For example, the starter's entry _react4xp/entries/App.tsx_ is compiled into the entry asset _App.js_. Add a second entry _react4xp/entries/shop/Cart.tsx_, and it becomes _shop/Cart.js_: each entry gets its own asset, named from its path below the <<build#entryDirs, entryDirs>> folder - see <<#jsxPath, jsxPath>>.
 
 When rendered (whether it's by using `.render` or a pair of `renderBody`/`renderPageContributions` in the <<library#react4xp_object, custom flow>>), each entry will become not only assets of their own, but *independent root level react apps* in the browser memory! Good to know if you display more than one entry on a page - which you can, but you might also consider using just one entry for the root, and multiple imports in it.
 
@@ -117,7 +117,7 @@ export default props => <HookButton {...props} />;
 === Why?
 The reason for this has to do with how the components are compiled, and that the runtime-client trigger call in the browser _uses the default-export directly, in vanilla JS_ - so everything that's exported from an entry must be ready and compiled for vanilla-JS usage.
 
-In the examples above it would be equivalent to `Welcome(props);` and `HookButton(props);`. `Welcome` is not compiled to a function that can be called like this, and the pure `HookButtons` function is not really a _functional component_ (before it's called as a component, the way we do when it's wrapped), just a regular JS function - so the straight export https://reactjs.org/warnings/invalid-hook-call-warning.html[breaks the rules of hooks and you get an error].
+In the examples above it would be equivalent to `Welcome(props);` and `HookButton(props);`. `Welcome` is not compiled to a function that can be called like this, and the pure `HookButton` function is not really a _functional component_ (before it's called as a component, the way we do when it's wrapped), just a regular JS function - so the straight export https://reactjs.org/warnings/invalid-hook-call-warning.html[breaks the rules of hooks and you get an error].
 
 
 [[jsxPath]]

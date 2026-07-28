@@ -2,14 +2,67 @@
 :toc: right
 :imagesdir: media/
 
-By default React4XP will render your React components on the server, and send the resulting HTML to the browser
+By default React4XP renders your React components on the server, sends the resulting HTML to the browser, and then hydrates them into live React apps in the browser
 
 == How it works
 The default running mode of React4xp is https://www.freecodecamp.org/news/demystifying-reacts-server-side-render-de335d408fe4/[serverside rendering (SSR)] (although `ssr` can override this).
 
 In a nutshell, source files like TSX and JSX are compiled into JS assets that lib-react4xp's SSR engine runs to render HTML. This output is then delivered to the browser along with dependency code (usually references to necessary assets like CSS, JS etc) - these dependencies are also rendered, as page contributions. Rendering the HTML body and the page contributions happens to two different steps, using either <<library#react4xp_render, `render`>> (which wraps both steps for convenience) or the <<library#react4xp_object, "custom flow">>.
 
-The aim of react4xp is https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905[isomorphic rendering]: after the react component(s) are serverside rendered, they are activated (<<hydration#, hydrated>>) in the browser, turning them into running, active react apps. It's _the same react code_ that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browserspecific code from running on the server).
+The aim of react4xp is https://medium.com/capital-one-tech/why-everyone-is-talking-about-isomorphic-universal-javascript-and-why-it-matters-38c07c87905[isomorphic rendering]: after the react component(s) are serverside rendered, they are activated (<<#hydration, hydrated>>) in the browser, turning them into running, active react apps. It's _the same react code_ that runs at the server as in the browser: no need to write the same component twice - one for SSR and one for the browser (although occasionally, tweaks are needed to prevent browserspecific code from running on the server).
+
+[[hydration]]
+== Hydration
+
+By default React4XP renders entries both server-side and client-side: the HTML is rendered on the server first, then *hydrated* - activated - in the browser. You can also switch to server-side only, or client-side only.
+
+=== Controlling SSR and hydration
+
+The mode is set per rendering, through the `options` argument of <<library#react4xp_render, `render`>>:
+
+[source,TypeScript]
+----
+const output = render(
+  'MyComponent',
+  props,
+  request,
+  {
+    body: myHtmlBody,
+    id: myId,
+    ssr: true, // <1>
+    hydrate: true // <2>
+  }
+);
+
+return output;
+----
+<1> Set to `false` to disable server-side rendering
+<2> Set to `false` to disable client-side rendering
+
+Both default to the matching <<config#, application config>> value - `react4xp.ssr` and `react4xp.hydrate` - which are themselves `true` unless you set them. See the <<library#react4xp_render_parameters, render parameters>> for the full option list.
+
+[[isomorphic-gotchas]]
+=== Server- and client-side gotchas
+
+When using isomorphic JavaScript, selected features may only be working on server-side, and some only on client side, like `document` and `window` - which are pure client-side concepts. React4xp has polyfilled `window` as _empty object_. To prevent weird behavior or errors, take care to only execute browser-specific code in the browser.
+
+For example, the click counter in the starter's `Hello` component is compiled and read into memory on the server, but its click handler is never triggered to actually _run_ there - so it needs no extra safeguard. Where you do need one, it's easy enough:
+
+[source,javascript,options="nowrap"]
+----
+if (typeof window.navigator !== 'undefined') {
+    // ...This won't run during SSR...
+}
+----
+
+Of course, this also applies to imported packages / nested components and so on. Importing them is usually safe, but consider wrapping the areas where they're called/used.
+
+[TIP]
+====
+Your React components may produce server-side errors, but these are not always easily interpreted.
+
+Switching over to pure _clientside rendering_ (by setting SSR false, Hydrate true) in your app function, the particular React component will likely give you a better/sourcemapped error message in the browser console, making your debugging life easier.
+====
 
 [[renderers]]
 == Renderers

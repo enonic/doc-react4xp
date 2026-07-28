@@ -178,7 +178,7 @@ The result is the HTML string we passed to the  `render` request of our app func
 <4> `client-QZN5J5VC.global.js` is the client-wrapper. TODO: What does it do?
 <5> Properties and props needed for the client-side rendering to work properly (pun intended)
 <6> The `<div id="react4xpApp">` target container, now filled with a server-side rendering of the react component
-<7> Script that triggers `hydration` - more on this in the next chapter
+<7> Script that triggers `hydration` - see <<ssr#hydration, Hydration>>
 
 NOTE: Most of these static assets are content-hashed, and optimized for client-side caching - thus running a CDN in front of the application, in production, will speed up the delivery.
 

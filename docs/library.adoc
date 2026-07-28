@@ -5,7 +5,7 @@
 [[api]]
 The React4xp library (https://market.enonic.com/vendors/enonic/react4xp-lib[Enonic Market]) exposes a few functions, the <<data_fetcher, DataFetcher>> class and a `React4xp` object that can be used in your Enonic app.
 
-For the <<ssr#, SSR engine>> and <<hydration#, hydration>>, and for compilation and runtime <<config#, configuration>>, see the respective chapters.
+For the <<ssr#, SSR engine>> and <<ssr#hydration, hydration>>, and for compilation and runtime <<config#, configuration>>, see the respective chapters.
 
 == Usage
 

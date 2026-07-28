@@ -1,7 +1,7 @@
 = React4XP reference documentation
 :toc: right
 
-React4XP lets front-end developers build *Enonic XP applications with React*. React components are rendered <<ssr#, server-side>> and then <<hydration#, hydrated>> in the browser by default, so the same React code runs on both the server and the client (isomorphic rendering).
+React4XP lets front-end developers build *Enonic XP applications with React*. React components are rendered <<ssr#, server-side>> and then <<ssr#hydration, hydrated>> in the browser by default, so the same React code runs on both the server and the client (isomorphic rendering).
 
 NOTE: This documentation covers *React4XP 7.x*, which builds on *React 19* and requires *Enonic XP 8*.
 
@@ -23,7 +23,7 @@ A fully working demo application is available on https://market.enonic.com/vendo
 
 - <<starter#, Starter>> - the project layout, defaults and build pipeline the rest of this reference assumes.
 - <<library#, Library reference>> - the `render` / `processHtml` functions and the `React4xp` object.
-- <<ssr#, SSR engine>> and <<hydration#, Hydration>> - how server- and client-side rendering work.
+- <<ssr#, SSR engine>> - server-side rendering, <<ssr#hydration, hydration>> and the rendering internals.
 - <<config#, Configuration>>, <<build#, Build>>, <<chunks#, Chunks>> and <<entries#, Entries>> - compilation and runtime internals.
 - <<app#, App.ts>> and <<macro-data#, Macros>> - the app function and macro data.
 - <<release#, Release notes>> and <<upgrade#, Upgrade notes>>.

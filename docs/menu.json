@@ -13,12 +13,8 @@
       "document": "library"
     },
     {
-      "title": "SSR engine",
+      "title": "SSR and hydration",
       "document": "ssr"
-    },
-    {
-      "title": "Hydration",
-      "document": "hydration"
     },
     {
       "title": "Configuration",

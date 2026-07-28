@@ -698,7 +698,7 @@ The links have been shortened for better readability
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td><code>client-QZN5J5VC.global.js</code> is the client-wrapper. TODO: What does it do?</td>
+<td><code>client-QZN5J5VC.global.js</code> is the client-wrapper.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -731,7 +731,7 @@ Most of these static assets are content-hashed, and optimized for client-side ca
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 15:17:23 UTC
+Last updated 2026-07-28 15:20:26 UTC
 </div>
 </div>
 </body>

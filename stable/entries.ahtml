@@ -532,7 +532,7 @@ In legacy XP 7 apps, entries could also be placed below <strong><em>/site/</em><
 <p>React4xp handles them in build-time and runtime: locates entries, compiles each entry into its own <strong>entry asset</strong> (under <em>/build/resources/main/r4xAssets</em>). React4xp&#8217;s render methods also generate page contributions that make sure these assets are served to the client.</p>
 </div>
 <div class="paragraph">
-<p>For example, early in this tutorial we&#8217;ve seen the entries <em>hello-react.jsx</em> and <em>color.jsx</em>, they are compiled into the assets <em>hello-react.js</em> and <em>color.js</em>.</p>
+<p>For example, the starter&#8217;s entry <em>react4xp/entries/App.tsx</em> is compiled into the entry asset <em>App.js</em>. Add a second entry <em>react4xp/entries/shop/Cart.tsx</em>, and it becomes <em>shop/Cart.js</em>: each entry gets its own asset, named from its path below the <a href="build.ahtml#entryDirs">entryDirs</a> folder - see <a href="#jsxPath">jsxPath</a>.</p>
 </div>
 <div class="paragraph">
 <p>When rendered (whether it&#8217;s by using <code>.render</code> or a pair of <code>renderBody</code>/<code>renderPageContributions</code> in the <a href="library.ahtml#react4xp_object">custom flow</a>), each entry will become not only assets of their own, but <strong>independent root level react apps</strong> in the browser memory! Good to know if you display more than one entry on a page - which you can, but you might also consider using just one entry for the root, and multiple imports in it.</p>
@@ -618,7 +618,7 @@ export default props =&gt; &lt;HookButton {...props} /&gt;;</code></pre>
 <p>The reason for this has to do with how the components are compiled, and that the runtime-client trigger call in the browser <em>uses the default-export directly, in vanilla JS</em> - so everything that&#8217;s exported from an entry must be ready and compiled for vanilla-JS usage.</p>
 </div>
 <div class="paragraph">
-<p>In the examples above it would be equivalent to <code>Welcome(props);</code> and <code>HookButton(props);</code>. <code>Welcome</code> is not compiled to a function that can be called like this, and the pure <code>HookButtons</code> function is not really a <em>functional component</em> (before it&#8217;s called as a component, the way we do when it&#8217;s wrapped), just a regular JS function - so the straight export <a href="https://reactjs.org/warnings/invalid-hook-call-warning.html">breaks the rules of hooks and you get an error</a>.</p>
+<p>In the examples above it would be equivalent to <code>Welcome(props);</code> and <code>HookButton(props);</code>. <code>Welcome</code> is not compiled to a function that can be called like this, and the pure <code>HookButton</code> function is not really a <em>functional component</em> (before it&#8217;s called as a component, the way we do when it&#8217;s wrapped), just a regular JS function - so the straight export <a href="https://reactjs.org/warnings/invalid-hook-call-warning.html">breaks the rules of hooks and you get an error</a>.</p>
 </div>
 </div>
 </div>
@@ -706,7 +706,7 @@ XP 8 apps have no <em>site/</em> folder, so this rule no longer applies to them.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 15:14:10 UTC
+Last updated 2026-07-28 15:17:23 UTC
 </div>
 </div>
 </body>

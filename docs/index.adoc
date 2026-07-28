@@ -1,4 +1,4 @@
-= React4XP reference documentation
+= React4XP 7 reference documentation
 :toc: right
 
 Server side React rendering for Enonic XP applications.

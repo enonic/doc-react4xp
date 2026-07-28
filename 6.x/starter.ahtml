@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>Entries</title>
+<title>React4XP starter</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,88 +437,48 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Entries</h1>
+<h1>React4XP starter</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#entries">What is an entry?</a></li>
-<li><a href="#howto">How to make an entry</a></li>
-<li><a href="#assets_and_apps">Entries, assets and react apps</a></li>
-<li><a href="#classes-and-hooks">Classes and hooks in entries</a>
+<li><a href="#creating_a_project">Creating a project</a></li>
+<li><a href="#structure">Project structure</a></li>
+<li><a href="#defaults">Defaults the starter sets</a></li>
+<li><a href="#single-entry">Single-entry architecture</a>
 <ul class="sectlevel2">
-<li><a href="#jsx_entry_examples">JSX entry examples</a></li>
-<li><a href="#why">Why?</a></li>
+<li><a href="#site_mapping">Site mapping</a></li>
 </ul>
 </li>
-<li><a href="#jsxPath">What is the jsxPath?</a></li>
-<li><a href="#from_source_file_location_to_jsxpath">From source file location to jsxPath</a></li>
-<li><a href="#overview_in_entries_json">Overview in entries.json</a></li>
-<li><a href="#name_not_path">Name, not path</a></li>
+<li><a href="#build-pipeline">Build pipeline</a>
+<ul class="sectlevel2">
+<li><a href="#typescript_projects">TypeScript projects</a></li>
+</ul>
+</li>
+<li><a href="#not-included">What the starter does not include</a></li>
+<li><a href="#version_compatibility">Version compatibility</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="entries"><a class="link" href="#entries">What is an entry?</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>React4xp is not limited to a single "React app", it may actually support multiple React instances on a single page.</p>
+<p>The React4XP starter is a ready-to-run Enonic XP application that wires together the <a href="library.ahtml">library</a>, the <code>@enonic/react4xp</code> build tool and a working Hello world page.</p>
 </div>
 <div class="paragraph">
-<p>In. React4XP we call these <code>entries</code>. It&#8217;s actually a webpack term, but in React4xp we use the word entry for <strong>a React component that can be called by React4xp</strong> from an XP script file. They are the only react files that React4xp can use directly.</p>
+<p>Most of this reference describes React4XP relative to "the starter setup" - the conventions and default values below are what that refers to.</p>
 </div>
 <div class="paragraph">
-<p>Think of entries as <strong>"bridge elements"</strong>:</p>
+<p>Source: <a href="https://github.com/enonic/starter-react4xp" target="_blank" rel="noopener">github.com/enonic/starter-react4xp</a> | <a href="https://market.enonic.com/starters/react4xp-starter" target="_blank" rel="noopener">Enonic Market</a></p>
 </div>
-<div id="mentalmodel" class="paragraph">
-<div class="title">A mental model:</div>
-<p><span class="image"><img src="media/entries.png" alt="entries" width="720px" title="React4xp Entries basic structure. Controllers can use entries, entries can import anything"></span></p>
-</div>
-<div class="paragraph">
-<p>(Here&#8217;s a <a href="entries/cheatsheet.ahtml">cheat sheet</a>. See also chunks, for a <a href="chunks.ahtml#entries_and_chunks">complete picture</a>)</p>
-</div>
-<div class="paragraph">
-<p>On the XP/server side, you have the server-side functions with their backend XP flow, logic and XP lib imports. Entries are the beginning of the frontend side (although the same code is also used for serverside-rendering): they do regular frontend-style ES6 logic and can <strong>import</strong> stuff from NPM/node_modules, your own logic, nested react components, whatever - even other entries.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="howto"><a class="link" href="#howto">How to make an entry</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Entries are pretty much just standard TSX/JSX files, but they must follow <strong>two requirements</strong> (another <a href="entries/howto.ahtml">cheat sheet</a>):</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>is located in a folder below one of the <strong>entryDirs</strong> folders listed in <em>react4xp.config.js</em> - the starter uses <strong><em>react4xp/entries/</em></strong> (see also <a href="#jsxPath">jsxPath</a>).
-In legacy XP 7 apps, entries could also be placed below <strong><em>/site/</em></strong> - XP 8 apps no longer have this folder (it was renamed to <code>cms/</code>, which is not scanned for entries),</p>
-</li>
-<li>
-<p>and <strong>default-exports a function</strong>: <code>props?&#8658;reactComponent</code> - a function that <em>may</em> take a <code>props</code> argument (serializable JS object: no functions) and <em>must</em> return a react component.</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock note">
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p><strong>Important:</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>There should be no call to <code>React.render</code> or <code>ReactDOM.render</code> in an entry (or a compiled entry or dependency bundle - keep an eye on your imports). React4xp will handle that call in the right context.</p>
-</li>
-<li>
-<p>If your entry uses react hooks or it&#8217;s a react class component, read <a href="#classes-and-hooks">Classes and hooks in entries</a> below.</p>
-</li>
-</ul>
-</div>
+For a guided, hands-on walkthrough of building an app from the starter, use the <a href="https://developer.enonic.com/learn/react4xp-tutorial">React4XP tutorial</a>. This page documents <strong>what the starter contains</strong> and <strong>which defaults it sets</strong>.
 </td>
 </tr>
 </table>
@@ -526,187 +486,509 @@ In legacy XP 7 apps, entries could also be placed below <strong><em>/site/</em><
 </div>
 </div>
 <div class="sect1">
-<h2 id="assets_and_apps"><a class="link" href="#assets_and_apps">Entries, assets and react apps</a></h2>
+<h2 id="creating_a_project"><a class="link" href="#creating_a_project">Creating a project</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>React4xp handles them in build-time and runtime: locates entries, compiles each entry into its own <strong>entry asset</strong> (under <em>/build/resources/main/r4xAssets</em>). React4xp&#8217;s render methods also generate page contributions that make sure these assets are served to the client.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project create -r starter-react4xp</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>For example, the starter&#8217;s entry <em>react4xp/entries/App.tsx</em> is compiled into the entry asset <em>App.js</em>. Add a second entry <em>react4xp/entries/shop/Cart.tsx</em>, and it becomes <em>shop/Cart.js</em>: each entry gets its own asset, named from its path below the <a href="build.ahtml#entryDirs">entryDirs</a> folder - see <a href="#jsxPath">jsxPath</a>.</p>
+<p>The <a href="https://developer.enonic.com/docs/enonic-cli" target="_blank" rel="noopener">Enonic CLI</a> clones the starter, renames the app, and sets up a sandbox. Then build and deploy:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">enonic project deploy</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>When rendered (whether it&#8217;s by using <code>.render</code> or a pair of <code>renderBody</code>/<code>renderPageContributions</code> in the <a href="library.ahtml#react4xp_object">custom flow</a>), each entry will become not only assets of their own, but <strong>independent root level react apps</strong> in the browser memory! Good to know if you display more than one entry on a page - which you can, but you might also consider using just one entry for the root, and multiple imports in it.</p>
+<p>No separate <code>npm install</code> step is needed - the Gradle build runs it (see <a href="#build-pipeline">Build pipeline</a>).</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Requirements</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enonic XP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7.16.1 or later</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Node</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22.15.1 or later</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">npm</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10.9.2 or later</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This page documents the starter&#8217;s <code>6.x</code> branch, which targets <strong>Enonic XP 7</strong> and <strong>React4XP 6.x</strong> (React 19). Create from it with <code>enonic project create -r starter-react4xp -b 6.x</code>. The <code>master</code> branch targets XP 8 and React4XP 7 - see the <strong>7.x</strong> documentation for that.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="classes-and-hooks"><a class="link" href="#classes-and-hooks">Classes and hooks in entries</a></h2>
+<h2 id="structure"><a class="link" href="#structure">Project structure</a></h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>react4xp.config.js              <i class="conum" data-value="1"></i><b>(1)</b>
+webpack.config.react4xp.js      <i class="conum" data-value="2"></i><b>(2)</b>
+rspack.config.mjs               <i class="conum" data-value="3"></i><b>(3)</b>
+tsup.config.ts                  <i class="conum" data-value="4"></i><b>(4)</b>
+build.gradle                    <i class="conum" data-value="5"></i><b>(5)</b>
+gradle.properties
+package.json
+tsconfig.json
+tsconfig.node.json              <i class="conum" data-value="6"></i><b>(6)</b>
+tsconfig.react4xp.json
+tsconfig.xp.nashorn.json
+src/main/resources/
+├── application.svg
+├── assets/                     <i class="conum" data-value="7"></i><b>(7)</b>
+├── site/
+│   ├── site.xml                <i class="conum" data-value="8"></i><b>(8)</b>
+│   ├── app.ts                  <i class="conum" data-value="9"></i><b>(9)</b>
+│   ├── component.ts            <i class="conum" data-value="10"></i><b>(10)</b>
+│   ├── content-types/
+│   ├── mixins/
+│   ├── pages/
+│   ├── processors/
+│   └── x-data/
+├── react4xp/
+│   ├── entries/
+│   │   └── App.tsx             <i class="conum" data-value="11"></i><b>(11)</b>
+│   ├── componentRegistry.tsx   <i class="conum" data-value="12"></i><b>(12)</b>
+│   ├── dataFetcher.ts          <i class="conum" data-value="13"></i><b>(13)</b>
+│   ├── components/
+│   │   └── hello/              <i class="conum" data-value="14"></i><b>(14)</b>
+│   ├── constants.ts
+│   └── utils/
+├── services/
+└── types/
+    └── AppProps.ts</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>React4XP build configuration - entries and chunks. See <a href="build.ahtml#react4xp.config.js">react4xp.config.js</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Webpack/RSpack customization. See <a href="build.ahtml#webpack.config.react4xp.js">webpack.config.react4xp.js</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>RSpack config for the client-side asset build.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><code>tsup</code> config for server-side TypeScript and browser assets - everything <strong>except</strong> <code>.tsx</code>, which <code>@enonic/react4xp</code> owns.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>XP app plugin plus the <code>buildXpResources</code>, <code>react4xp</code> and <code>buildAssets</code> Gradle tasks.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Three TypeScript projects - Node tooling, React4XP components and XP server code - each type-checked separately. See <a href="#build-pipeline">Build pipeline</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Static and client-only assets, served through <code>lib-asset</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Site descriptor with the catch-all mapping and the component service.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>The app function - handles all page rendering. See <a href="app.ahtml">App.ts</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Component function enabling drag-and-drop in the visual page editor.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>The one and only React4XP <a href="entries.ahtml">entry</a>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td>Maps content types and components to React components.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
+<td>Maps content types and components to server-side data processors.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="14"></i><b>14</b></td>
+<td>Example component: <code>Hello.tsx</code>, <code>Hello.module.css</code> and <code>HelloProcessor.ts</code>.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="defaults"><a class="link" href="#defaults">Defaults the starter sets</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If your entry is a <a href="https://reactjs.org/docs/react-component.html">react class component</a> or a functional component that uses <a href="https://reactjs.org/docs/hooks-intro.html">react hooks</a> (and possibly other specific react features?), the default-export must be correctly wrapped.</p>
+<p>These are the values the rest of this reference assumes.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Setting</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>entryDirs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>['entries']</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entries are picked up from <em>src/main/resources/react4xp/entries/</em> - see <a href="build.ahtml#entryDirs">entryDirs</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>chunkDirs</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Everything else under <em>react4xp/</em> bundles into the single <code>react4xp.*.js</code> chunk - see <a href="build.ahtml#chunkDirs">chunkDirs</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>globals</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">empty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>react</code> and <code>react-dom</code> only - see <a href="chunks.ahtml">Chunks</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>externals</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">empty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nothing excluded from the bundle</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entry count</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 (<code>App.tsx</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The whole site renders through one entry - see <a href="#single-entry">Single-entry architecture</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Webpack rules</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSS, CSS modules, Sass, fonts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Added on top of the built-in JSX/TSX rules - see <a href="build.ahtml#webpack.config.react4xp.js">webpack.config.react4xp.js</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The starter ships no <code>.cfg</code> file - all <a href="config.ahtml">application config</a> options fall back to their defaults (SSR and hydration both enabled).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="single-entry"><a class="link" href="#single-entry">Single-entry architecture</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The starter does not create one entry per part or page. It registers a single entry, <em>entries/App.tsx</em>, and renders the whole content tree through it:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/react4xp/entries/App.tsx</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">const App: React.FC&lt;AppProps&gt; = ({component, data, common, meta}) =&gt; {
+    const compMeta: MetaData = meta as MetaData;
+    compMeta.componentRegistry = componentRegistry;   <i class="conum" data-value="1"></i><b>(1)</b>
+    return &lt;BaseComponent component={component} data={data} common={common} meta={compMeta}/&gt;;  <i class="conum" data-value="2"></i><b>(2)</b>
+};</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The registry tells <code>BaseComponent</code> which React component to use for each content type or component descriptor.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>BaseComponent</code> from <a href="https://www.npmjs.com/package/@enonic/react-components" target="_blank" rel="noopener"><code>@enonic/react-components</code></a> walks the component tree and renders each node.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Two registries drive this, and adding a component means adding an entry to each:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/react4xp/componentRegistry.tsx</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">export const componentRegistry = new ComponentRegistry();
+
+componentRegistry.addContentType('portal:site', {View: Hello});</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/react4xp/dataFetcher.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">export const dataFetcher = new DataFetcher();
+
+dataFetcher.addContentType('portal:site', {processor: helloProcessor});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>dataFetcher</code> runs server-side and produces the props; the <code>componentRegistry</code> maps them to a React component. The processor never runs in the browser:</p>
+</div>
+<div class="listingblock">
+<div class="title">src/main/resources/react4xp/components/hello/HelloProcessor.ts</div>
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">export const helloProcessor: ComponentProcessor&lt;PageDescriptor&gt; = (params) =&gt; {
+    const title = params.content?.displayName || params.content._name || 'Display name not set';
+    return {
+        title: title,
+        initialCount: 0,
+    };
+};</code></pre>
+</div>
 </div>
 <div class="sect2">
-<h3 id="jsx_entry_examples"><a class="link" href="#jsx_entry_examples">JSX entry examples</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Straight functional component entry:</strong> straight export is okay.</p>
+<h3 id="site_mapping"><a class="link" href="#site_mapping">Site mapping</a></h3>
+<div class="paragraph">
+<p>The single entry works because the site descriptor routes every request to one function:</p>
+</div>
 <div class="listingblock">
-<div class="title">Header.jsx</div>
+<div class="title">src/main/resources/site/site.xml</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-javascript" data-lang="javascript">function Header(props) {
-    return &lt;h1&gt;{props.text}&lt;/h1&gt;;
-};
-
-// This is fine:
-export default Header;
-
-// An extra wrapped layer would work too. But it's usually not necessary:
-//
-// export default (props) =&gt; &lt;Header {...props} /&gt;;</code></pre>
+<pre class="highlight"><code class="language-XML" data-lang="XML">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;site&gt;
+  &lt;form/&gt;
+  &lt;mappings&gt;
+    &lt;mapping controller="/site/app.js" order="10"&gt;
+      &lt;pattern invert="true"&gt;/r4xp5.*&lt;/pattern&gt;   <i class="conum" data-value="1"></i><b>(1)</b>
+    &lt;/mapping&gt;
+    &lt;mapping controller="/site/component.js" order="10"&gt;
+      &lt;service&gt;component&lt;/service&gt;   <i class="conum" data-value="2"></i><b>(2)</b>
+    &lt;/mapping&gt;
+  &lt;/mappings&gt;
+&lt;/site&gt;</code></pre>
 </div>
 </div>
-</li>
-<li>
-<p><strong>Class component entry:</strong> needs a JSX-wrapped export.</p>
-<div class="listingblock">
-<div class="title">Welcome.jsx</div>
-<div class="content">
-<pre class="highlight nowrap"><code class="language-javascript" data-lang="javascript">class Welcome extends React.Component {
-  render() {
-    return &lt;p&gt;Hello, {this.props.name}&lt;/p&gt;;
-  }
-}
-
-// Bad:
-// export default Welcome;
-
-// Good:
-export default props =&gt; &lt;Welcome {...props} /&gt;;</code></pre>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Matches everything <strong>except</strong> the internal React4XP routes.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <code>component</code> service mapping enables drag-and-drop in the visual page editor.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>React4XP&#8217;s assets are served by services that ship with the library, so nothing needs mounting - see <a href="library.ahtml#asset-serving">Asset serving</a>.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="app.ahtml">App.ts</a> for the function itself.</p>
 </div>
 </div>
-</li>
-<li>
-<p><strong>Functional component that uses hooks:</strong> needs a JSX-wrapped export.</p>
-<div class="listingblock">
-<div class="title">HookButton.jsx</div>
-<div class="content">
-<pre class="highlight nowrap"><code class="language-javascript" data-lang="javascript">function HookButton() {
-  const [count, setCount] = useState(0);
-
-  return (
-      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-        You clicked {count} times
-      &lt;/button&gt;
-  );
-}
-
-// Bad:
-// export default HookButton;
-
-// Good:
-export default props =&gt; &lt;HookButton {...props} /&gt;;</code></pre>
 </div>
 </div>
-</li>
-</ul>
+<div class="sect1">
+<h2 id="build-pipeline"><a class="link" href="#build-pipeline">Build pipeline</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>enonic project deploy</code> runs Gradle, which drives three independent npm builds:</p>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Gradle task</th>
+<th class="tableblock halign-left valign-top">What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>buildXpResources</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Runs <code>tsup</code> over <em>src/main/resources</em> - compiles server-side <code>.ts</code> for XP&#8217;s JS engine</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>react4xp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Runs <code>@enonic/react4xp&#8217;s own RSpack/Webpack pipeline for all `.tsx</code> entries and chunks</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>buildAssets</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Runs <code>tsup</code> over <em>assets/</em> - browser-only client code</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>All three feed <em>build/resources/main</em>, and <code>jar</code> depends on all three. The division matters: <strong><code>.tsx</code> files belong to the React4XP build, everything else to <code>tsup</code></strong>. Server-side <code>.ts</code> files inside <em>react4xp/</em> - <code>dataFetcher.ts</code>, processors, utils - are server code and are compiled by <code>tsup</code>.</p>
 </div>
+<div class="paragraph">
+<p>Useful scripts:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run watch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>./gradlew -t deploy</code> - rebuild and redeploy on change</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run rewatch</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clean, deploy, then watch</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run check</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Type-check all three TypeScript projects and lint</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm run browserSync</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proxy localhost:8080 with automatic browser reload</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>npm test</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jest, configured for both server and client environments</p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2">
-<h3 id="why"><a class="link" href="#why">Why?</a></h3>
+<h3 id="typescript_projects"><a class="link" href="#typescript_projects">TypeScript projects</a></h3>
 <div class="paragraph">
-<p>The reason for this has to do with how the components are compiled, and that the runtime-client trigger call in the browser <em>uses the default-export directly, in vanilla JS</em> - so everything that&#8217;s exported from an entry must be ready and compiled for vanilla-JS usage.</p>
+<p>The starter keeps three separate TypeScript projects, because the three targets have incompatible requirements - <code>npm run check</code> type-checks each one:</p>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">File</th>
+<th class="tableblock halign-left valign-top">Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>tsconfig.xp.nashorn.json</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Server-side code running in XP&#8217;s Nashorn JS engine</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>tsconfig.react4xp.json</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>.tsx</code> React components - DOM libs, <code>jsx: react</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>tsconfig.node.json</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Node-side build tooling and config files</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
-<p>In the examples above it would be equivalent to <code>Welcome(props);</code> and <code>HookButton(props);</code>. <code>Welcome</code> is not compiled to a function that can be called like this, and the pure <code>HookButton</code> function is not really a <em>functional component</em> (before it&#8217;s called as a component, the way we do when it&#8217;s wrapped), just a regular JS function - so the straight export <a href="https://reactjs.org/warnings/invalid-hook-call-warning.html">breaks the rules of hooks and you get an error</a>.</p>
+<p>Inside React code, <code>/<strong></code> resolves to <em>src/main/resources/react4xp/</em> and <code>/lib/xp/</strong></code> to the <code>@enonic-types</code> packages, so imports like <code>/types/AppProps</code> and <code>/lib/enonic/react4xp</code> work without relative paths.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="jsxPath"><a class="link" href="#jsxPath">What is the jsxPath?</a></h2>
+<h2 id="not-included"><a class="link" href="#not-included">What the starter does not include</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Each entry is identified by its own <em>jsxPath</em>.</p>
+<p>Deliberately out of scope - the starter is a foundation, not a template gallery:</p>
 </div>
-<div class="paragraph">
-<p>Short and brutal: the jsxPath is a name string generated from the path and filename of the compiled asset after building, relative to <em>/build/resources/main/r4xAssets/</em> - without file extension.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="from_source_file_location_to_jsxpath"><a class="link" href="#from_source_file_location_to_jsxpath">From source file location to jsxPath</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>During development though, these 3 rules are probably easier:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>If you use <code>portal.getComponent()</code> to insert a component object (like <code>entry</code> in the <a href="https://developer.enonic.com/learn/react4xp-tutorial">React4XP tutorial</a>), you can ignore the jsxPath and let the component object do the job: <code>React4xp.render</code> will use it to look for an entry with <strong>the same name, in the same folder</strong>, as a part/page/layout implementation.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>But if you need to access an entry with a particular name or from a different folder (from anywhere in the compiled JAR, actually), here&#8217;s <strong>how to find the jsxPath of an entry</strong>:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="2">
-<li>
-<p>Using the setup from the starter, put your entries under <em>src/main/resources/</em> <strong><em>react4xp/entries</em></strong>.
-Then the jsxPath (and compiled-asset path) will be relative to <em>/entries/</em>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Actually, you can control this with the <code>entryDirs</code> property in your local <a href="https://github.com/enonic/enonic-react4xp/blob/master/examples/react4xp.config.js"><em>react4xp.config.js</em></a>. The starter has added <code>entryDirs:['entries']</code> here, but this is a comma-separated list of folder names relative to <em>src/main/resources/react4xp/</em>. Remember, if you add more entryDirs or replace <code>entries</code>, the jsxPaths will always be relative to those new entryDirs, so beware of name collisions.</p>
+<p><strong>No content types, pages, parts or layouts.</strong> The <em>site/</em> subdirectories are empty placeholders. The Hello example is registered against the built-in <code>portal:site</code> content type.</p>
 </li>
 <li>
-<p><strong>For example:</strong> add <code>../myComponents</code> to entryDirs: <code>entryDirs:['entries','../myComponents']</code>. Since entryDirs and <code>../</code> are relative to <em>src/main/resources/react4xp/</em>, the new entry source folder is <em>src/main/resources/myComponents/</em>. Now new TSX/JSX files can be put there, and get a jsxPath relative to that. So the entry <em>src/main/resources/myComponents/</em> <strong><em>app/myEntry.jsx</em></strong> will get the jsxPath <code>"app/myEntry"</code>, and will be compiled to this entry asset: <em>/build/resources/main/r4xAssets/app/myEntry.js</em>.</p>
+<p><strong>No ready-made GraphQL queries.</strong> <code>lib-guillotine</code> is on the classpath, but the starter renders through the <code>dataFetcher</code> rather than through Guillotine.</p>
+</li>
+<li>
+<p><strong>No styling framework.</strong> Only CSS modules and Sass support in the webpack config.</p>
+</li>
+<li>
+<p><strong>No production config.</strong> Add a <code>.cfg</code> file yourself to tune <a href="config.ahtml">SSR, hydration and globals</a>.</p>
 </li>
 </ul>
-</div>
-</li>
-<li>
-<p>In legacy XP 7 apps only: if an entry&#8217;s source file is a TSX/JSX under <em>/src/main/resources/</em> <strong><em>site/</em></strong>, the jsxPath is the source file&#8217;s path relative to <em>/src/main/resources/</em> - unix-style and without file extension.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>So the jsxPath will start with <code>site/&#8230;&#8203;</code> etc (and the asset will be compiled into a folder below <em>/build/resources/main/r4xAssets/</em> <strong><em>site/</em></strong>, and so on).
-XP 8 apps have no <em>site/</em> folder, so this rule no longer applies to them.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="overview_in_entries_json"><a class="link" href="#overview_in_entries_json">Overview in entries.json</a></h2>
+<h2 id="version_compatibility"><a class="link" href="#version_compatibility">Version compatibility</a></h2>
 <div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Starter ref</th>
+<th class="tableblock halign-left valign-top">React4XP</th>
+<th class="tableblock halign-left valign-top">Enonic XP</th>
+<th class="tableblock halign-left valign-top">React</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>master</code> (branch)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7.x</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8.0.1+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>6.x</code> (branch)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7.16.1+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>v5.1.0</code> (tag)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7.13.3+</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
-<p>If you&#8217;re ever unsure: after building, the <strong>jsxPaths of all the available entries</strong> are stored in <em>build/resources/main/r4xAssets/entries.json</em>.</p>
+<p><code>v5.1.0</code> is the last tagged starter release; the 6.x and 7.x lines are maintained as branches. Older tags exist back to <code>v0.2.8</code> (XP 7.0.0) but are not supported.</p>
 </div>
 <div class="paragraph">
-<p>This file is generated by webpack during build. It&#8217;s also used by the runtime, so it <strong>should not be deleted or edited</strong>!</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="name_not_path"><a class="link" href="#name_not_path">Name, not path</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>JsxPaths are not actually file system paths, but <strong>static name strings</strong>. So avoid shortcuts and relative references like <code>../</code>, etc.</p>
-</div>
-<div class="paragraph">
-<p>See also: <a href="chunks.ahtml">chunks</a>.</p>
+<p>To move from React4XP 5 to 6, see the <a href="upgrade.ahtml">recommended upgrade</a> or the <a href="legacy-upgrade.ahtml">legacy mode upgrade</a>. For 6 to 7, switch to the <strong>7.x</strong> documentation.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 16:53:21 UTC
+Last updated 2026-07-28 16:53:50 UTC
 </div>
 </div>
 </body>

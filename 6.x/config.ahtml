@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>Entries</title>
+<title>Application config</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,68 +437,58 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Entries</h1>
+<h1>Application config</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#entries">What is an entry?</a></li>
-<li><a href="#howto">How to make an entry</a></li>
-<li><a href="#assets_and_apps">Entries, assets and react apps</a></li>
-<li><a href="#classes-and-hooks">Classes and hooks in entries</a>
-<ul class="sectlevel2">
-<li><a href="#jsx_entry_examples">JSX entry examples</a></li>
-<li><a href="#why">Why?</a></li>
-</ul>
-</li>
-<li><a href="#jsxPath">What is the jsxPath?</a></li>
-<li><a href="#from_source_file_location_to_jsxpath">From source file location to jsxPath</a></li>
-<li><a href="#overview_in_entries_json">Overview in entries.json</a></li>
-<li><a href="#name_not_path">Name, not path</a></li>
+<li><a href="#r4xp_tuning">R4XP tuning</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="entries"><a class="link" href="#entries">What is an entry?</a></h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>React4xp is not limited to a single "React app", it may actually support multiple React instances on a single page.</p>
+<p>Standard configuration options for your React4XP-based application</p>
 </div>
 <div class="paragraph">
-<p>In. React4XP we call these <code>entries</code>. It&#8217;s actually a webpack term, but in React4xp we use the word entry for <strong>a React component that can be called by React4xp</strong> from an XP script file. They are the only react files that React4xp can use directly.</p>
-</div>
-<div class="paragraph">
-<p>Think of entries as <strong>"bridge elements"</strong>:</p>
-</div>
-<div id="mentalmodel" class="paragraph">
-<div class="title">A mental model:</div>
-<p><span class="image"><img src="media/entries.png" alt="entries" width="720px" title="React4xp Entries basic structure. Controllers can use entries, entries can import anything"></span></p>
-</div>
-<div class="paragraph">
-<p>(Here&#8217;s a <a href="entries/cheatsheet.ahtml">cheat sheet</a>. See also chunks, for a <a href="chunks.ahtml#entries_and_chunks">complete picture</a>)</p>
-</div>
-<div class="paragraph">
-<p>On the XP/server side, you have the server-side functions with their backend XP flow, logic and XP lib imports. Entries are the beginning of the frontend side (although the same code is also used for serverside-rendering): they do regular frontend-style ES6 logic and can <strong>import</strong> stuff from NPM/node_modules, your own logic, nested react components, whatever - even other entries.</p>
+<p>Like any other Enonic application, you may provide a standard configuration file, and place it in the XP config folder. i.e. $XP_HOME/config/&lt;app.name&gt;.cfg</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="howto"><a class="link" href="#howto">How to make an entry</a></h2>
+<h2 id="r4xp_tuning"><a class="link" href="#r4xp_tuning">R4XP tuning</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Entries are pretty much just standard TSX/JSX files, but they must follow <strong>two requirements</strong> (another <a href="entries/howto.ahtml">cheat sheet</a>):</p>
+<p>The React4XP starter provides a few standard configuration options (in addition to the configuration options you define yourself). Here they are:</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>is located in a folder below one of the <strong>entryDirs</strong> folders listed in <em>react4xp.config.js</em> - the starter uses <strong><em>react4xp/entries/</em></strong> (see also <a href="#jsxPath">jsxPath</a>).
-In legacy XP 7 apps, entries could also be placed below <strong><em>/site/</em></strong> - XP 8 apps no longer have this folder (it was renamed to <code>cms/</code>, which is not scanned for entries),</p>
-</li>
-<li>
-<p>and <strong>default-exports a function</strong>: <code>props?&#8658;reactComponent</code> - a function that <em>may</em> take a <code>props</code> argument (serializable JS object: no functions) and <em>must</em> return a react component.</p>
-</li>
-</ol>
+<div id="ssrMaxThreads" class="listingblock">
+<div class="title">myr4xpapp.cfg</div>
+<div class="content">
+<pre class="highlight"><code class="language-properties" data-lang="properties">react4xp.hydrate = (true|false) <i class="conum" data-value="1"></i><b>(1)</b>
+react4xp.ssr = (true|false) <i class="conum" data-value="2"></i><b>(2)</b>
+# react4xp.ssr.maxThreads = (int) <i class="conum" data-value="3"></i><b>(3)</b>
+react4xp.serveGlobals = true <i class="conum" data-value="4"></i><b>(4)</b>
+react4xp.urlType = server|absolute <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Set <code>hydrate</code> to <code>false</code> to disable hydration</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Set <code>ssr</code> to <code>false</code> in order to disable SSR by default. This setting can be overridden on a per-component basis in your code.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>maxThreads</code> caps how many <a href="ssr.ahtml">server-side renderings</a> React4XP performs at the same time. Each rendering runs on a single thread, so this sets concurrency, not the speed of an individual rendering. Defaults to the number of processor cores available to XP. Be careful about setting this option: each concurrent worker keeps its own copy of the compiled assets in memory, so a high value costs memory and adds <a href="ssr.ahtml#warmup">warmup</a> work.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>React4xp creates a globals bundle, which MUST contain all assets NEEDED to render server-side. By default it contains react and react-dom, but more assets can be added. By default the globals bundle is also provided to the client-side, setting <code>serveGlobals</code> to <code>false</code> will prevent globals from being delivered to the client.
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -506,207 +496,38 @@ In legacy XP 7 apps, entries could also be placed below <strong><em>/site/</em><
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p><strong>Important:</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>There should be no call to <code>React.render</code> or <code>ReactDOM.render</code> in an entry (or a compiled entry or dependency bundle - keep an eye on your imports). React4xp will handle that call in the right context.</p>
-</li>
-<li>
-<p>If your entry uses react hooks or it&#8217;s a react class component, read <a href="#classes-and-hooks">Classes and hooks in entries</a> below.</p>
-</li>
-</ul>
-</div>
+Keep in mind the assets in the globals bundle are still REQUIRED for
+clientSide rendering to work, so you have to provide those assets by other
+means, for example via CDN.
 </td>
 </tr>
 </table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="assets_and_apps"><a class="link" href="#assets_and_apps">Entries, assets and react apps</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>React4xp handles them in build-time and runtime: locates entries, compiles each entry into its own <strong>entry asset</strong> (under <em>/build/resources/main/r4xAssets</em>). React4xp&#8217;s render methods also generate page contributions that make sure these assets are served to the client.</p>
-</div>
-<div class="paragraph">
-<p>For example, the starter&#8217;s entry <em>react4xp/entries/App.tsx</em> is compiled into the entry asset <em>App.js</em>. Add a second entry <em>react4xp/entries/shop/Cart.tsx</em>, and it becomes <em>shop/Cart.js</em>: each entry gets its own asset, named from its path below the <a href="build.ahtml#entryDirs">entryDirs</a> folder - see <a href="#jsxPath">jsxPath</a>.</p>
-</div>
-<div class="paragraph">
-<p>When rendered (whether it&#8217;s by using <code>.render</code> or a pair of <code>renderBody</code>/<code>renderPageContributions</code> in the <a href="library.ahtml#react4xp_object">custom flow</a>), each entry will become not only assets of their own, but <strong>independent root level react apps</strong> in the browser memory! Good to know if you display more than one entry on a page - which you can, but you might also consider using just one entry for the root, and multiple imports in it.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="classes-and-hooks"><a class="link" href="#classes-and-hooks">Classes and hooks in entries</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>If your entry is a <a href="https://reactjs.org/docs/react-component.html">react class component</a> or a functional component that uses <a href="https://reactjs.org/docs/hooks-intro.html">react hooks</a> (and possibly other specific react features?), the default-export must be correctly wrapped.</p>
-</div>
-<div class="sect2">
-<h3 id="jsx_entry_examples"><a class="link" href="#jsx_entry_examples">JSX entry examples</a></h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Straight functional component entry:</strong> straight export is okay.</p>
-<div class="listingblock">
-<div class="title">Header.jsx</div>
-<div class="content">
-<pre class="highlight nowrap"><code class="language-javascript" data-lang="javascript">function Header(props) {
-    return &lt;h1&gt;{props.text}&lt;/h1&gt;;
-};
-
-// This is fine:
-export default Header;
-
-// An extra wrapped layer would work too. But it's usually not necessary:
-//
-// export default (props) =&gt; &lt;Header {...props} /&gt;;</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Class component entry:</strong> needs a JSX-wrapped export.</p>
-<div class="listingblock">
-<div class="title">Welcome.jsx</div>
-<div class="content">
-<pre class="highlight nowrap"><code class="language-javascript" data-lang="javascript">class Welcome extends React.Component {
-  render() {
-    return &lt;p&gt;Hello, {this.props.name}&lt;/p&gt;;
-  }
-}
-
-// Bad:
-// export default Welcome;
-
-// Good:
-export default props =&gt; &lt;Welcome {...props} /&gt;;</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Functional component that uses hooks:</strong> needs a JSX-wrapped export.</p>
-<div class="listingblock">
-<div class="title">HookButton.jsx</div>
-<div class="content">
-<pre class="highlight nowrap"><code class="language-javascript" data-lang="javascript">function HookButton() {
-  const [count, setCount] = useState(0);
-
-  return (
-      &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-        You clicked {count} times
-      &lt;/button&gt;
-  );
-}
-
-// Bad:
-// export default HookButton;
-
-// Good:
-export default props =&gt; &lt;HookButton {...props} /&gt;;</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="why"><a class="link" href="#why">Why?</a></h3>
-<div class="paragraph">
-<p>The reason for this has to do with how the components are compiled, and that the runtime-client trigger call in the browser <em>uses the default-export directly, in vanilla JS</em> - so everything that&#8217;s exported from an entry must be ready and compiled for vanilla-JS usage.</p>
-</div>
-<div class="paragraph">
-<p>In the examples above it would be equivalent to <code>Welcome(props);</code> and <code>HookButton(props);</code>. <code>Welcome</code> is not compiled to a function that can be called like this, and the pure <code>HookButton</code> function is not really a <em>functional component</em> (before it&#8217;s called as a component, the way we do when it&#8217;s wrapped), just a regular JS function - so the straight export <a href="https://reactjs.org/warnings/invalid-hook-call-warning.html">breaks the rules of hooks and you get an error</a>.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="jsxPath"><a class="link" href="#jsxPath">What is the jsxPath?</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Each entry is identified by its own <em>jsxPath</em>.</p>
-</div>
-<div class="paragraph">
-<p>Short and brutal: the jsxPath is a name string generated from the path and filename of the compiled asset after building, relative to <em>/build/resources/main/r4xAssets/</em> - without file extension.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="from_source_file_location_to_jsxpath"><a class="link" href="#from_source_file_location_to_jsxpath">From source file location to jsxPath</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>During development though, these 3 rules are probably easier:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>If you use <code>portal.getComponent()</code> to insert a component object (like <code>entry</code> in the <a href="https://developer.enonic.com/learn/react4xp-tutorial">React4XP tutorial</a>), you can ignore the jsxPath and let the component object do the job: <code>React4xp.render</code> will use it to look for an entry with <strong>the same name, in the same folder</strong>, as a part/page/layout implementation.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>But if you need to access an entry with a particular name or from a different folder (from anywhere in the compiled JAR, actually), here&#8217;s <strong>how to find the jsxPath of an entry</strong>:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="2">
-<li>
-<p>Using the setup from the starter, put your entries under <em>src/main/resources/</em> <strong><em>react4xp/entries</em></strong>.
-Then the jsxPath (and compiled-asset path) will be relative to <em>/entries/</em>.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Actually, you can control this with the <code>entryDirs</code> property in your local <a href="https://github.com/enonic/enonic-react4xp/blob/master/examples/react4xp.config.js"><em>react4xp.config.js</em></a>. The starter has added <code>entryDirs:['entries']</code> here, but this is a comma-separated list of folder names relative to <em>src/main/resources/react4xp/</em>. Remember, if you add more entryDirs or replace <code>entries</code>, the jsxPaths will always be relative to those new entryDirs, so beware of name collisions.</p>
-</li>
-<li>
-<p><strong>For example:</strong> add <code>../myComponents</code> to entryDirs: <code>entryDirs:['entries','../myComponents']</code>. Since entryDirs and <code>../</code> are relative to <em>src/main/resources/react4xp/</em>, the new entry source folder is <em>src/main/resources/myComponents/</em>. Now new TSX/JSX files can be put there, and get a jsxPath relative to that. So the entry <em>src/main/resources/myComponents/</em> <strong><em>app/myEntry.jsx</em></strong> will get the jsxPath <code>"app/myEntry"</code>, and will be compiled to this entry asset: <em>/build/resources/main/r4xAssets/app/myEntry.js</em>.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>In legacy XP 7 apps only: if an entry&#8217;s source file is a TSX/JSX under <em>/src/main/resources/</em> <strong><em>site/</em></strong>, the jsxPath is the source file&#8217;s path relative to <em>/src/main/resources/</em> - unix-style and without file extension.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>So the jsxPath will start with <code>site/&#8230;&#8203;</code> etc (and the asset will be compiled into a folder below <em>/build/resources/main/r4xAssets/</em> <strong><em>site/</em></strong>, and so on).
-XP 8 apps have no <em>site/</em> folder, so this rule no longer applies to them.</p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="overview_in_entries_json"><a class="link" href="#overview_in_entries_json">Overview in entries.json</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>If you&#8217;re ever unsure: after building, the <strong>jsxPaths of all the available entries</strong> are stored in <em>build/resources/main/r4xAssets/entries.json</em>.</p>
-</div>
-<div class="paragraph">
-<p>This file is generated by webpack during build. It&#8217;s also used by the runtime, so it <strong>should not be deleted or edited</strong>!</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="name_not_path"><a class="link" href="#name_not_path">Name, not path</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>JsxPaths are not actually file system paths, but <strong>static name strings</strong>. So avoid shortcuts and relative references like <code>../</code>, etc.</p>
-</div>
-<div class="paragraph">
-<p>See also: <a href="chunks.ahtml">chunks</a>.</p>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><code>urlType</code> may optionally be used to force generation of <code>absolute</code> URLs. The default value is <code>server</code>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This feature was introduced in <code>React4XP-5.1.0</code>
+</td>
+</tr>
+</table>
+</div></td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 16:53:21 UTC
+Last updated 2026-07-28 16:53:50 UTC
 </div>
 </div>
 </body>

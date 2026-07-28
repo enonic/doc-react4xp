@@ -5,6 +5,10 @@
       "checkout": "master",
       "displayName": "7.x",
       "latest": true
+    },
+    {
+      "label": "6.x",
+      "checkout": "6.x"
     }
   ]
 }

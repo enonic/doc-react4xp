@@ -445,7 +445,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#add_library_dependency">Add library dependency</a></li>
 <li><a href="#import_library">Import library</a></li>
-<li><a href="#mount-api">Mount the API</a></li>
+<li><a href="#asset-serving">Asset serving</a></li>
 <li><a href="#invocation-example">Invocation example</a></li>
 </ul>
 </li>
@@ -453,6 +453,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#react4xp_render">render</a></li>
 <li><a href="#processhtml">processHtml</a></li>
+<li><a href="#serviceurl">serviceUrl</a></li>
 </ul>
 </li>
 <li><a href="#classes">Classes</a>
@@ -510,16 +511,39 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="mount-api"><a class="link" href="#mount-api">Mount the API</a></h3>
+<h3 id="asset-serving"><a class="link" href="#asset-serving">Asset serving</a></h3>
 <div class="paragraph">
-<p>React4XP 7 (and newer) uses XP 8&#8217;s universal API functionality, serving its compiled assets and SSR endpoints through a <code>react4xp</code> web API. This API must be <strong>mounted</strong> in the context descriptor (i.e. site, <code>webapp</code> or <code>admin tool</code> where React4XP is used). Parts, layouts and pages inherit it from their context and don&#8217;t declare it themselves. Without it, the browser can&#8217;t load React4XP&#8217;s assets and rendering won&#8217;t work.</p>
+<p>React4XP 6 serves its compiled assets and SSR endpoints through two XP <strong>services</strong> that ship inside the library itself:</p>
 </div>
-<div class="listingblock">
-<div class="title">Adding API to src/main/resources/cms/site.yaml</div>
-<div class="content">
-<pre class="highlight"><code class="language-yaml" data-lang="yaml">apis:
-  - "react4xp"</code></pre>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>react4xp</code></dt>
+<dd>
+<p>serves the compiled entry, chunk and client assets</p>
+</dd>
+<dt class="hdlist1"><code>react4xp-dependencies</code></dt>
+<dd>
+<p>serves the dependency manifest the client needs</p>
+</dd>
+</dl>
 </div>
+<div class="paragraph">
+<p>Because they are services rather than APIs, they are addressable as soon as the library is on the classpath - there is nothing to declare or mount in <code>site.xml</code>.</p>
+</div>
+<div class="paragraph">
+<p>Use <a href="#serviceurl"><code>serviceUrl</code></a> if you need to build a URL to a service yourself. The library&#8217;s own URL helpers - <code>assetUrl</code>, <code>getClientUrl</code> and <code>getExecutorUrl</code> - are built on it.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+React4XP 7 replaces these services with an XP 8 <strong>universal API</strong>, which must be explicitly mounted. If you are upgrading, see <a href="upgrade.ahtml">Upgrade notes</a>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -532,7 +556,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlight"><code class="language-typescript" data-lang="typescript">import {React4xp} from '/lib/enonic/react4xp';
 import type {Request} from '@enonic-types/core';
 
-export function GET(request: Request) {
+export function get(request: Request) {
     // 'my-entry' is a JsxPath to a compiled react component
     return React4xp.render('my-entry', {greeting: 'Hello world'}, request);
 }</code></pre>
@@ -879,6 +903,82 @@ export const paragraphProcessor: ComponentProcessor&lt;'com.enonic.app.hmdb:para
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="serviceurl"><a class="link" href="#serviceurl">serviceUrl</a></h3>
+<div class="paragraph">
+<p>Builds a URL to an XP service. React4XP uses it internally to serve its own assets, and it is exported for cases where you need a service URL of your own with React4XP&#8217;s URL-type handling applied.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {serviceUrl} from '/lib/enonic/react4xp';
+
+const url = serviceUrl({service: 'myService'});</code></pre>
+</div>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 1%;">
+<col style="width: 1%;">
+<col style="width: 98%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>service</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Required.</strong> Name of the service to link to.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Path appended to the service URL. Defaults to <code>/</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>params</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">object</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Query parameters to add to the URL.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>application</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> Application the service belongs to. Defaults to the current app (<code>app.name</code>).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>server</code> | <code>absolute</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><strong>Optional.</strong> URL type. Defaults to <code>app.config['react4xp.urlType']</code> - see <a href="config.ahtml">Configuration</a>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>serviceUrl</code> is removed in React4XP 7, where assets are served through an XP 8 universal API instead of services.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1171,7 +1271,7 @@ Registering a content-type processor is the shortcut for taking over a whole pag
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-javascript" data-lang="javascript">exports.GET = (request) =&gt; {
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">exports.get = (request) =&gt; {
 
     // Object constructor:
     const myComponent = new React4xp('my-entry');
@@ -1740,7 +1840,7 @@ For a complete custom flow function, see the <a href="#react4xp_object">usage ex
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 16:53:21 UTC
+Last updated 2026-07-28 16:53:50 UTC
 </div>
 </div>
 </body>

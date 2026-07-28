@@ -492,7 +492,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ol class="arabic">
 <li>
 <p>is located in a folder below one of the <strong>entryDirs</strong> folders listed in <em>react4xp.config.js</em> - the starter uses <strong><em>react4xp/entries/</em></strong> (see also <a href="#jsxPath">jsxPath</a>).
-In legacy XP 7 apps, entries could also be placed below <strong><em>/site/</em></strong> - XP 8 apps no longer have this folder (it was renamed to <code>cms/</code>, which is not scanned for entries),</p>
+Entries may also be placed below <strong><em>/site/</em></strong>, which React4xp scans by default,</p>
 </li>
 <li>
 <p>and <strong>default-exports a function</strong>: <code>props?&#8658;reactComponent</code> - a function that <em>may</em> take a <code>props</code> argument (serializable JS object: no functions) and <em>must</em> return a react component.</p>
@@ -667,12 +667,11 @@ Then the jsxPath (and compiled-asset path) will be relative to <em>/entries/</em
 </div>
 </li>
 <li>
-<p>In legacy XP 7 apps only: if an entry&#8217;s source file is a TSX/JSX under <em>/src/main/resources/</em> <strong><em>site/</em></strong>, the jsxPath is the source file&#8217;s path relative to <em>/src/main/resources/</em> - unix-style and without file extension.</p>
+<p>If an entry&#8217;s source file is a TSX/JSX under <em>/src/main/resources/</em> <strong><em>site/</em></strong>, the jsxPath is the source file&#8217;s path relative to <em>/src/main/resources/</em> - unix-style and without file extension.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>So the jsxPath will start with <code>site/&#8230;&#8203;</code> etc (and the asset will be compiled into a folder below <em>/build/resources/main/r4xAssets/</em> <strong><em>site/</em></strong>, and so on).
-XP 8 apps have no <em>site/</em> folder, so this rule no longer applies to them.</p>
+<p>So the jsxPath will start with <code>site/&#8230;&#8203;</code> etc (and the asset will be compiled into a folder below <em>/build/resources/main/r4xAssets/</em> <strong><em>site/</em></strong>, and so on).</p>
 </li>
 </ul>
 </div>
@@ -706,7 +705,7 @@ XP 8 apps have no <em>site/</em> folder, so this rule no longer applies to them.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 16:53:21 UTC
+Last updated 2026-07-28 16:53:50 UTC
 </div>
 </div>
 </body>

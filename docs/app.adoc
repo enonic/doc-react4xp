@@ -175,7 +175,7 @@ The result is the HTML string we passed to the  `render` request of our app func
 <1> `globals.<contenthash>.js` is react and react-dom bundled together. For improved security, they are served from XP instead of a random CDN.
 <2> `runtime.js` containst chunked boilerplate code to run entries.
 <3> `App.js` is the compiled version of _App.tsx_
-<4> `client-QZN5J5VC.global.js` is the client-wrapper. TODO: What does it do?
+<4> `client-QZN5J5VC.global.js` is the client-wrapper.
 <5> Properties and props needed for the client-side rendering to work properly (pun intended)
 <6> The `<div id="react4xpApp">` target container, now filled with a server-side rendering of the react component
 <7> Script that triggers `hydration` - see <<ssr#hydration, Hydration>>

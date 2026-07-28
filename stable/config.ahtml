@@ -484,7 +484,7 @@ react4xp.urlType = server|absolute <i class="conum" data-value="5"></i><b>(5)</b
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td><code>maxThreads</code> specifies the number of (<a href="ssr.ahtml#renderers">renderers</a>) used for simultaneous SSR requests. Defaults to the number of processors cores available to XP. Be careful about setting this option</td>
+<td><code>maxThreads</code> caps how many <a href="ssr.ahtml">server-side renderings</a> React4XP performs at the same time. Each rendering runs on a single thread, so this sets concurrency, not the speed of an individual rendering. Defaults to the number of processor cores available to XP. Be careful about setting this option: each concurrent worker keeps its own copy of the compiled assets in memory, so a high value costs memory and adds <a href="ssr.ahtml#warmup">warmup</a> work.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -527,7 +527,7 @@ This feature was introduced in <code>React4XP-5.1.0</code>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 06:41:34 UTC
+Last updated 2026-07-28 07:23:30 UTC
 </div>
 </div>
 </body>

@@ -448,7 +448,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#isomorphic-gotchas">Server- and client-side gotchas</a></li>
 </ul>
 </li>
-<li><a href="#renderers">Renderers</a></li>
 <li><a href="#warmup">Warmup time</a>
 <ul class="sectlevel2">
 <li><a href="#improving_warmup_time_for_development">Improving warmup time for development</a></li>
@@ -563,24 +562,10 @@ return output;</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="renderers"><a class="link" href="#renderers">Renderers</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>React4xp handles multithreaded rendering. This is done by setting up a number of renderers where each one is ready to answer to rendering requests in parallel, independently.</p>
-</div>
-<div class="paragraph">
-<p>The number of renderer workers is <a href="config.ahtml#ssrMaxThreads">determined in java but can be overriden</a>.</p>
-</div>
-<div class="paragraph">
-<p>When a renderer runs into an error during SSR, that renderer is torn down and a new one is initialized (see warmup time below). This happens as far as possible during idle time.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="warmup"><a class="link" href="#warmup">Warmup time</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>After your React4xp app is (re)started, the first time React4xp is triggered to render something, the engine will initialize. This means the renderers will load the <em>compiled assets</em> necessary for the rendering, into the engine memory:</p>
+<p>After your React4xp app is (re)started, the first time React4xp is triggered to render something, the engine will initialize. This means the engine will load the <em>compiled assets</em> necessary for the rendering, into memory:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -599,10 +584,22 @@ return output;</code></pre>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>This causes some warmup time</strong> when starting your app: a noticable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the <em>compiled</em> assets involved. This will happen on every restart of the app (and every <a href="#renderers">renderer</a> must be initialized, but they do this in parallel).</p>
+<p><strong>This causes some warmup time</strong> when starting your app: a noticable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the <em>compiled</em> assets involved. This will happen on every restart of the app.</p>
 </div>
 <div class="paragraph">
-<p>But as long as the code runs without errors, initialization happens only once (i.e. each asset is loaded once at most, on each renderer). After the warmup, the react apps are ready-to-run from memory, so repeated renderings after that (even with different props) are fast.</p>
+<p>But as long as the code runs without errors, initialization happens only once - each asset is loaded once at most. After the warmup, the react apps are ready-to-run from memory, so repeated renderings after that (even with different props) are fast.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If an SSR throws an error, the engine discards and rebuilds the affected worker, which has to load its assets again. A single rendering can therefore be slow right after an error, even on a warmed-up app.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="improving_warmup_time_for_development"><a class="link" href="#improving_warmup_time_for_development">Improving warmup time for development</a></h3>
@@ -679,7 +676,7 @@ exports.GET = request =&gt; {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 06:41:34 UTC
+Last updated 2026-07-28 07:23:30 UTC
 </div>
 </div>
 </body>

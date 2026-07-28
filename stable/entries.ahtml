@@ -535,7 +535,7 @@ In legacy XP 7 apps, entries could also be placed below <strong><em>/site/</em><
 <p>For example, early in this tutorial we&#8217;ve seen the entries <em>hello-react.jsx</em> and <em>color.jsx</em>, they are compiled into the assets <em>hello-react.js</em> and <em>color.js</em>.</p>
 </div>
 <div class="paragraph">
-<p>When rendered (whether it&#8217;s by using <code>.render</code> or a pair of <code>renderBody</code>/<code>renderPageContributions</code> in the <a href="https://developer.enonic.com/learn/react4xp-tutorial">custom flow syntax</a>), each entry will become not only assets of their own, but <strong>independent root level react apps</strong> in the browser memory! Good to know if you display more than one entry on a page - which you can, but you might also consider using just one entry for the root, and multiple imports in it.</p>
+<p>When rendered (whether it&#8217;s by using <code>.render</code> or a pair of <code>renderBody</code>/<code>renderPageContributions</code> in the <a href="library.ahtml#react4xp_object">custom flow</a>), each entry will become not only assets of their own, but <strong>independent root level react apps</strong> in the browser memory! Good to know if you display more than one entry on a page - which you can, but you might also consider using just one entry for the root, and multiple imports in it.</p>
 </div>
 </div>
 </div>
@@ -643,7 +643,7 @@ export default props =&gt; &lt;HookButton {...props} /&gt;;</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>If you use <code>portal.getComponent()</code> to insert a component object (like <code>entry</code> in <a href="https://developer.enonic.com/learn/react4xp-tutorial">the first example</a>), you can ignore the jsxPath and let the component object do the job: <code>React4xp.render</code> will use it to look for an entry with <strong>the same name, in the same folder</strong>, as a part/page/layout implementation.</p>
+<p>If you use <code>portal.getComponent()</code> to insert a component object (like <code>entry</code> in the <a href="https://developer.enonic.com/learn/react4xp-tutorial">React4XP tutorial</a>), you can ignore the jsxPath and let the component object do the job: <code>React4xp.render</code> will use it to look for an entry with <strong>the same name, in the same folder</strong>, as a part/page/layout implementation.</p>
 </li>
 </ol>
 </div>
@@ -706,7 +706,7 @@ XP 8 apps have no <em>site/</em> folder, so this rule no longer applies to them.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 07:23:30 UTC
+Last updated 2026-07-28 15:14:10 UTC
 </div>
 </div>
 </body>

@@ -441,6 +441,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
+<li><a href="#introduction">Introduction</a></li>
 <li><a href="#how_react4xp_is_distributed">How React4XP is distributed</a></li>
 <li><a href="#in_this_reference">In this reference</a></li>
 </ul>
@@ -448,6 +449,26 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Server side React rendering for Enonic XP applications.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<strong>New to React4XP?</strong> Visit our <a href="https://developer.enonic.com/learn/react4xp-tutorial">React4XP tutorial</a> for a hands-on, guided introduction.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="link" href="#introduction">Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>React4XP lets front-end developers build <strong>Enonic XP applications with React</strong>. React components are rendered <a href="ssr.ahtml">server-side</a> and then <a href="ssr.ahtml#hydration">hydrated</a> in the browser by default, so the same React code runs on both the server and the client (isomorphic rendering).</p>
@@ -460,18 +481,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 <td class="content">
 This documentation covers <strong>React4XP 7.x</strong>, which builds on <strong>React 19</strong> and requires <strong>Enonic XP 8</strong>.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-New to React4XP? Start with the <a href="https://developer.enonic.com/learn/react4xp-tutorial">React4XP tutorial</a> for a hands-on, guided introduction - this reference documents the library and framework in depth.
 </td>
 </tr>
 </table>
@@ -531,7 +540,7 @@ New to React4XP? Start with the <a href="https://developer.enonic.com/learn/reac
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 06:31:25 UTC
+Last updated 2026-07-28 06:41:34 UTC
 </div>
 </div>
 </body>

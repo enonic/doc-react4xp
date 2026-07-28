@@ -64,28 +64,21 @@ Your React components may produce server-side errors, but these are not always e
 Switching over to pure _clientside rendering_ (by setting SSR false, Hydrate true) in your app function, the particular React component will likely give you a better/sourcemapped error message in the browser console, making your debugging life easier.
 ====
 
-[[renderers]]
-== Renderers
-
-React4xp handles multithreaded rendering. This is done by setting up a number of renderers where each one is ready to answer to rendering requests in parallel, independently.
-
-The number of renderer workers is <<config#ssrMaxThreads, determined in java but can be overriden>>.
-
-When a renderer runs into an error during SSR, that renderer is torn down and a new one is initialized (see warmup time below). This happens as far as possible during idle time.
-
 [[warmup]]
 == Warmup time
 
-After your React4xp app is (re)started, the first time React4xp is triggered to render something, the engine will initialize. This means the renderers will load the _compiled assets_ necessary for the rendering, into the engine memory:
+After your React4xp app is (re)started, the first time React4xp is triggered to render something, the engine will initialize. This means the engine will load the _compiled assets_ necessary for the rendering, into memory:
 
 - react and reactDOM (`globals.*.js`),
 - packages from _node_modules_ (`vendors.*.js`),
 - dependency assets imported by the react components (aka. <<chunks#, chunks>>),
 - and finally, the <<entries#, entry assets>> themselves.
 
-*This causes some warmup time* when starting your app: a noticable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the _compiled_ assets involved. This will happen on every restart of the app (and every <<#renderers, renderer>> must be initialized, but they do this in parallel).
+*This causes some warmup time* when starting your app: a noticable delay before the first rendering shows up. This may be just a couple of seconds in total, but it may also take longer. It depends on the size and complexity of the _compiled_ assets involved. This will happen on every restart of the app.
 
-But as long as the code runs without errors, initialization happens only once (i.e. each asset is loaded once at most, on each renderer). After the warmup, the react apps are ready-to-run from memory, so repeated renderings after that (even with different props) are fast.
+But as long as the code runs without errors, initialization happens only once - each asset is loaded once at most. After the warmup, the react apps are ready-to-run from memory, so repeated renderings after that (even with different props) are fast.
+
+NOTE: If an SSR throws an error, the engine discards and rebuilds the affected worker, which has to load its assets again. A single rendering can therefore be slow right after an error, even on a warmed-up app.
 
 === Improving warmup time for development
 

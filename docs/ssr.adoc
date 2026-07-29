@@ -44,7 +44,7 @@ Both default to the matching <<config#, application config>> value - `react4xp.s
 [[isomorphic-gotchas]]
 === Server- and client-side gotchas
 
-When using isomorphic JavaScript, selected features may only be working on server-side, and some only on client side, like `document` and `window` - which are pure client-side concepts. The SSR engine provides only a minimal set of globals (such as `console` and no-op timers) - `window`, `document` and other browser APIs are *not defined* there, so referencing them during SSR throws a `ReferenceError`. To prevent errors, take care to only execute browser-specific code in the browser.
+When using isomorphic JavaScript, selected features may only be working on server-side, and some only on client side, like `document` and `window` - which are pure client-side concepts. During SSR, `window` is *undefined*. To prevent errors, take care to only execute browser-specific code in the browser.
 
 For example, the click counter in the starter's `Hello` component is compiled and read into memory on the server, but its click handler is never triggered to actually _run_ there - so it needs no extra safeguard. Where you do need one, it's easy enough:
 
@@ -54,8 +54,6 @@ if (typeof window !== 'undefined') {
     // ...This won't run during SSR...
 }
 ----
-
-NOTE: Use `typeof window` for the check - it is safe even when `window` doesn't exist at all. Accessing a property first (e.g. `window.navigator`) would itself throw during SSR.
 
 Of course, this also applies to imported packages / nested components and so on. Importing them is usually safe, but consider wrapping the areas where they're called/used.
 

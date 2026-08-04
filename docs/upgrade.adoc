@@ -5,26 +5,19 @@ React4XP 7 runs on Enonic XP 8, which React4XP 6 applications runs on XP 7. Movi
 
 The upgrade has two parts:
 
-. The standard *XP 7 to XP 8 application upgrade* - YAML descriptors, the new Gradle build and the code-level breaking changes. This is identical for any XP application and is covered by the generic guide.
-. A handful of *React4XP-specific* changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.
+. The standard <<standard-upgrade, *XP 7 to XP 8 application upgrade*>> - YAML descriptors, the new Gradle build and the code-level breaking changes. This is identical for any XP application and is covered by the generic guide.
+. A handful of <<react4xp-specifics, *React4XP-specific*>> changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.
 
 This page documents only part 2. Do the standard upgrade first, then apply the <<react4xp-specifics, React4XP specifics>> below.
 
+[[standard-upgrade]]
 == Standard XP 7 to XP 8 upgrade
 
 Upgrade the application to XP 8 exactly as you would any other XP app - convert the XML descriptors to YAML, move to the new Gradle build, and apply the code-level breaking changes. The complete, up-to-date procedure and breaking-change list live in the canonical guide, so follow that rather than repeating it here:
 
 TIP: https://developer.enonic.com/docs/code/stable/upgrade[Upgrading to XP 8^] - the generic XP 7 to XP 8 upgrade guide.
 
-The fastest path through it is the *xp-app-upgrader* skill for https://claude.com/claude-code[Claude Code^]. 
-
-[source]
-----
-/plugin marketplace add enonic/ai-enonic-marketplace
-/plugin install enonic-skills@enonic-marketplace
-----
-
-Then, from your application's project directory, ask Claude to upgrade it:
+The guide also describes how to run this upgrade automatically with an AI coding agent, using the https://github.com/enonic/agent-toolkit[Enonic Agents Toolkit^] skill.
 
 NOTE: Neither the generic guide nor the skill covers the React4XP-specific steps below - apply them once the standard XP 8 upgrade builds cleanly.
 

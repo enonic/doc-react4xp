@@ -441,7 +441,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#standard_xp_7_to_xp_8_upgrade">Standard XP 7 to XP 8 upgrade</a></li>
+<li><a href="#standard-upgrade">Standard XP 7 to XP 8 upgrade</a></li>
 <li><a href="#react4xp-specifics">React4XP specifics</a>
 <ul class="sectlevel2">
 <li><a href="#update_the_dependencies">Update the dependencies</a></li>
@@ -466,10 +466,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The standard <strong>XP 7 to XP 8 application upgrade</strong> - YAML descriptors, the new Gradle build and the code-level breaking changes. This is identical for any XP application and is covered by the generic guide.</p>
+<p>The standard <a href="#standard-upgrade"><strong>XP 7 to XP 8 application upgrade</strong></a> - YAML descriptors, the new Gradle build and the code-level breaking changes. This is identical for any XP application and is covered by the generic guide.</p>
 </li>
 <li>
-<p>A handful of <strong>React4XP-specific</strong> changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.</p>
+<p>A handful of <a href="#react4xp-specifics"><strong>React4XP-specific</strong></a> changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.</p>
 </li>
 </ol>
 </div>
@@ -479,7 +479,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="standard_xp_7_to_xp_8_upgrade"><a class="link" href="#standard_xp_7_to_xp_8_upgrade">Standard XP 7 to XP 8 upgrade</a></h2>
+<h2 id="standard-upgrade"><a class="link" href="#standard-upgrade">Standard XP 7 to XP 8 upgrade</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Upgrade the application to XP 8 exactly as you would any other XP app - convert the XML descriptors to YAML, move to the new Gradle build, and apply the code-level breaking changes. The complete, up-to-date procedure and breaking-change list live in the canonical guide, so follow that rather than repeating it here:</p>
@@ -497,16 +497,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="paragraph">
-<p>The fastest path through it is the <strong>xp-app-upgrader</strong> skill for <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>/plugin marketplace add enonic/ai-enonic-marketplace
-/plugin install enonic-skills@enonic-marketplace</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then, from your application&#8217;s project directory, ask Claude to upgrade it:</p>
+<p>The guide also describes how to run this upgrade automatically with an AI coding agent, using the <a href="https://github.com/enonic/agent-toolkit" target="_blank" rel="noopener">Enonic Agents Toolkit</a> skill.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -664,7 +655,7 @@ In your functions and processors, replace <code>Enonic.Xp.Http.Request</code> fr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-07-28 19:12:33 UTC
+Last updated 2026-08-04 07:31:47 UTC
 </div>
 </div>
 </body>

@@ -49,6 +49,8 @@ dependencies {
 }
 ----
 
+WARNING: Upgrade `lib-react4xp` and `@enonic/react4xp` *together*, and rebuild the application - assets compiled with version 6 will fail to load at SSR startup.
+
 NOTE: `@enonic-types/global` 8 brings in `@enonic-types/core`, which replaces the old `@enonic/js-utils` request type - see <<update-types, Update to the new types>> below.
 
 === Mount the React4XP API

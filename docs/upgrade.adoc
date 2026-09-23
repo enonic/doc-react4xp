@@ -8,7 +8,7 @@ The upgrade has two parts:
 . The standard <<standard-upgrade, *XP 7 to XP 8 application upgrade*>> - YAML descriptors, the new Gradle build and the code-level breaking changes. This is identical for any XP application and is covered by the generic guide.
 . A handful of <<react4xp-specifics, *React4XP-specific*>> changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.
 
-This page documents only part 2. Do the standard upgrade first, then apply the <<react4xp-specifics, React4XP specifics>> below.
+This page documents only part 2. Do the standard upgrade first, then apply the <<react4xp-specifics, React4XP specifics>> below. If the application still renders parts the version 5 way, without the `componentRegistry`, also see the <<legacy-upgrade#, legacy mode upgrade>>.
 
 [[standard-upgrade]]
 == Standard XP 7 to XP 8 upgrade
@@ -97,6 +97,7 @@ Update the npm scripts so the build runs tsdown (server code and client assets) 
 React4XP 7 builds on `@enonic-types/core`.
 In your functions and processors, replace `Enonic.Xp.Http.Request` from `@enonic/js-utils/types/Request` with `Request` from `@enonic-types/core`.
 
+[[build-deploy]]
 == Build and deploy
 
 Make a production build and deploy it to your sandbox:

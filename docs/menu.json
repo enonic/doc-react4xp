@@ -57,6 +57,10 @@
     {
       "title": "Upgrade notes",
       "document": "upgrade"
+    },
+    {
+      "title": "Legacy mode upgrade",
+      "document": "legacy-upgrade"
     }
   ]
 }

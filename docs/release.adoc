@@ -36,6 +36,7 @@ See the upgrade notes for the exact versions.
 == Still included from version 6
 
 The version 6 architecture carries over unchanged: a detached front-end, a single React app per page, the componentRegistry and dataFetcher rendering model, hashed and cache-optimized asset serving, and full https://market.enonic.com/vendors/enonic/booster[Booster] compatibility.
+Rendering parts the version 5 way, without the componentRegistry, is still supported - see the <<legacy-upgrade#, legacy mode upgrade>>.
 
 == Upgrading
 

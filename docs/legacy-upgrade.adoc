@@ -16,8 +16,7 @@ NOTE: Legacy mode covers *parts* only. Pages and layouts depend on the `componen
 
 == Part controllers
 
-Keep your version 5 style controllers, which now live under `cms/` instead of `site/`.
-As in version 6, replace `Enonic.Xp.Http.Request` from `@enonic/js-utils/types/Request` with `Request` from `@enonic-types/core`:
+Keep your version 5 style controllers. As part of the standard XP 8 upgrade they move from `site/` to `cms/`, and as in version 6, `Enonic.Xp.Http.Request` from `@enonic/js-utils/types/Request` is replaced with `Request` from `@enonic-types/core`:
 
 .src/main/resources/cms/parts/example/example.ts
 [source,TypeScript]
@@ -31,16 +30,34 @@ export function get(request: Request) {
     const component = getComponent();
     const props = {};
 
-    return render(
-        component,
-        props,
-        request,
-        {
-            ...
-        }
-    );
+    return render(component, props, request);
 }
 ----
+
+== Entries
+
+The entries do *not* move along with the controllers.
+When `render()` is given a component object, it derives the entry name from the component descriptor as `site/parts/<name>/<name>`, and React4XP still compiles entries found below `src/main/resources/site/`.
+XP 8 itself ignores that folder, so keep it for the legacy entries only:
+
+[source,files]
+----
+src/main/resources/
+├── cms/
+│   └── parts/
+│       └── example/
+│           ├── example.ts        <1>
+│           └── example.yaml
+└── site/
+    └── parts/
+        └── example/
+            └── example.tsx       <2>
+----
+
+<1> The controller, moved to `cms/` by the standard upgrade.
+<2> The entry, left in `site/` so its jsxPath stays `site/parts/example/example`.
+
+Alternatively, move the entry to one of the <<entries#howto, entryDirs>> configured in `react4xp.config.js` and pass its jsxPath to `render()` explicitly, for example `render('example', props, request)` for `react4xp/entries/example.tsx`.
 
 == Site descriptor
 
@@ -71,11 +88,12 @@ TIP: If the application has no `componentRegistry` at all, drop the `mappings` s
 
 == Removed APIs
 
-The `react4xp` and `react4xp-dependencies` XP services are replaced by the `react4xp` API.
-As a consequence, `serviceUrl` is no longer exported from `/lib/enonic/react4xp`.
+Compiled assets are now served by the `react4xp` API instead of the `react4xp` XP service. `render()` handles this by itself, so the only requirement is to mount the API as shown above.
 
-* Use `assetUrl` to build URLs to compiled assets.
-* Use `getComponentChunkUrls` to get the dependency URLs of your entries. The `react4xp-dependencies` HTTP endpoint has no replacement.
+Two things are gone without a direct replacement:
+
+* The `react4xp-dependencies` XP service, which returned the dependency URLs of a set of entries over HTTP. Server-side, `getComponentChunkUrls` from `/lib/enonic/react4xp` still provides the same information.
+* `serviceUrl` from `/lib/enonic/react4xp`. Use `assetUrl` to build URLs to compiled assets.
 
 == Build and deploy
 

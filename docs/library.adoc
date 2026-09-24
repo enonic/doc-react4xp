@@ -369,7 +369,15 @@ TIP: Registering a content-type processor is the shortcut for taking over a whol
 
 ==== Error handling
 
-If a processor throws, React4XP does not fail the request. The error is logged server-side and the offending component is replaced with an error component (`type: 'error'`) carrying an HTML message naming the descriptor and content path, so the rest of the page still renders. The thrown error message is included in that HTML (sanitized), so keep in mind it is visible to whoever views the page - treat a rendered error component as a processor that needs fixing, not as a supported rendering path.
+If a processor throws, React4XP does not fail the request. The error is logged server-side and the offending component is replaced with an error component (`type: 'error'`) carrying an HTML message naming the descriptor, content path and the sanitized error message, so the rest of the page still renders.
+
+What visitors see depends on the request mode. In Content Studio (edit, inline and admin mode) `BaseComponent` renders the error component as a red box, so editors can see what failed and where. In live and preview mode nothing is rendered in its place, and the page is shown without the failing component.
+
+The error view is not customizable through the `ComponentRegistry`. To render your own message, either check for `component.type === 'error'` in the <<app#, app entry>> before handing off to `BaseComponent` (this covers the top-level component only, since `Region` renders nested components directly), or catch the error inside the processor and let the part's `View` handle it. Treat a rendered error component as a processor that needs fixing, not as a supported rendering path.
+
+Since the request still completes with status 200, the application's XP error handler is not invoked for processor errors. XP invokes it only when the app function throws, or returns a 4xx or 5xx response without a body.
+
+NOTE: If the React entry itself fails during server-side rendering, React4XP inserts a "React4xp SSR error" box in place of the entry instead. In live mode the box shows only the entry name and ID, and the error message is logged server-side. See <<ssr#, SSR and hydration>>.
 
 [[react4xp_object]]
 === React4xp

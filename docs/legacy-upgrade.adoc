@@ -40,7 +40,7 @@ The entries do *not* move along with the controllers.
 When `render()` is given a component object, it derives the entry name from the component descriptor as `site/parts/<name>/<name>`, and React4XP still compiles entries found below `src/main/resources/site/`.
 XP 8 itself ignores that folder, so keep it for the legacy entries only:
 
-[source,files]
+[source]
 ----
 src/main/resources/
 ├── cms/

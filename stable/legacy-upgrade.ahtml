@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.26">
-<title>Upgrade from XP 7 to XP 8</title>
+<title>Legacy mode upgrade</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,20 +437,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-right">
 <div id="header">
-<h1>Upgrade from XP 7 to XP 8</h1>
+<h1>Legacy mode upgrade</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#standard-upgrade">Standard XP 7 to XP 8 upgrade</a></li>
-<li><a href="#react4xp-specifics">React4XP specifics</a>
-<ul class="sectlevel2">
-<li><a href="#update_the_dependencies">Update the dependencies</a></li>
-<li><a href="#mount_the_react4xp_api">Mount the React4XP API</a></li>
-<li><a href="#switch_to_the_new_build_tooling">Switch to the new build tooling</a></li>
-<li><a href="#update-types">Update to the new types</a></li>
-</ul>
-</li>
-<li><a href="#build-deploy">Build and deploy</a></li>
+<li><a href="#step_by_step">Step by step</a></li>
+<li><a href="#part_controllers">Part controllers</a></li>
+<li><a href="#entries">Entries</a></li>
+<li><a href="#site_descriptor">Site descriptor</a></li>
+<li><a href="#removed_apis">Removed APIs</a></li>
+<li><a href="#build_and_deploy">Build and deploy</a></li>
 </ul>
 </div>
 </div>
@@ -458,148 +454,141 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>React4XP 7 runs on Enonic XP 8, which React4XP 6 applications runs on XP 7. Moving to React4XP 7 means upgrading the application itself from XP 7 to XP 8. This is a source-level upgrade, not an in-place version bump.</p>
+<p>React4XP 7 is still compatible with how parts are rendered in version 5, where each part is a separate entry rendered by its own controller, outside the <code>componentRegistry</code>.</p>
 </div>
 <div class="paragraph">
-<p>The upgrade has two parts:</p>
+<p>This means you may upgrade a legacy React4XP application to version 7 without adopting the component registry. The <code>render()</code> function and the rendering it does are unchanged from version 6.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Legacy mode covers <strong>parts</strong> only. Pages and layouts depend on the <code>componentRegistry</code>, and must be migrated as described in the <strong>6.x</strong> documentation&#8217;s recommended upgrade before or during the move to version 7.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="step_by_step"><a class="link" href="#step_by_step">Step by step</a></h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>The standard <a href="#standard-upgrade"><strong>XP 7 to XP 8 application upgrade</strong></a> - YAML descriptors, the new Gradle build and the code-level breaking changes. This is identical for any XP application and is covered by the generic guide.</p>
+<p>Do the <a href="upgrade.ahtml#standard-upgrade">standard XP 7 to XP 8 upgrade</a> of the application.</p>
 </li>
 <li>
-<p>A handful of <a href="#react4xp-specifics"><strong>React4XP-specific</strong></a> changes on top - dependency versions, build tooling, the new types and mounting the React4XP API.</p>
+<p>Apply the <a href="upgrade.ahtml#react4xp-specifics">React4XP specifics</a>: dependencies, the <code>react4xp</code> API, build tooling and types.</p>
+</li>
+<li>
+<p>Apply the legacy mode specifics below.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>This page documents only part 2. Do the standard upgrade first, then apply the <a href="#react4xp-specifics">React4XP specifics</a> below. If the application still renders parts the version 5 way, without the <code>componentRegistry</code>, also see the <a href="legacy-upgrade.ahtml">legacy mode upgrade</a>.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="standard-upgrade"><a class="link" href="#standard-upgrade">Standard XP 7 to XP 8 upgrade</a></h2>
+<h2 id="part_controllers"><a class="link" href="#part_controllers">Part controllers</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Upgrade the application to XP 8 exactly as you would any other XP app - convert the XML descriptors to YAML, move to the new Gradle build, and apply the code-level breaking changes. The complete, up-to-date procedure and breaking-change list live in the canonical guide, so follow that rather than repeating it here:</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<a href="https://developer.enonic.com/docs/code/stable/upgrade" target="_blank" rel="noopener">Upgrading to XP 8</a> - the generic XP 7 to XP 8 upgrade guide.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The guide also describes how to run this upgrade automatically with an AI coding agent, using the <a href="https://github.com/enonic/agent-toolkit" target="_blank" rel="noopener">Enonic Agents Toolkit</a> skill.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Neither the generic guide nor the skill covers the React4XP-specific steps below - apply them once the standard XP 8 upgrade builds cleanly.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="react4xp-specifics"><a class="link" href="#react4xp-specifics">React4XP specifics</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>On top of the standard XP 8 upgrade, a React4XP application needs the following.</p>
-</div>
-<div class="sect2">
-<h3 id="update_the_dependencies"><a class="link" href="#update_the_dependencies">Update the dependencies</a></h3>
-<div class="paragraph">
-<p>Move to the version 7 React4XP packages and the XP 8 types.</p>
+<p>Keep your version 5 style controllers. As part of the standard XP 8 upgrade they move from <code>site/</code> to <code>cms/</code>, and as in version 6, <code>Enonic.Xp.Http.Request</code> from <code>@enonic/js-utils/types/Request</code> is replaced with <code>Request</code> from <code>@enonic-types/core</code>:</p>
 </div>
 <div class="listingblock">
-<div class="title">package.json</div>
+<div class="title">src/main/resources/cms/parts/example/example.ts</div>
 <div class="content">
-<pre class="highlight"><code class="language-json" data-lang="json">"@enonic/react4xp": "7.0.0",
-"@enonic/react-components": "^7.0.0",
-"@enonic-types/lib-react4xp": "^7.0.0",
-"@enonic-types/global": "^8.0.3",</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>And the React4XP library in the Gradle build:</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlight"><code class="language-groovy" data-lang="groovy">dependencies {
-    include 'com.enonic.lib:lib-react4xp:7.0.0'
+<pre class="highlight"><code class="language-TypeScript" data-lang="TypeScript">import {render} from '/lib/enonic/react4xp';
+import {getComponent} from '/lib/xp/portal';
+import type {Request} from '@enonic-types/core';
+
+
+export function get(request: Request) {
+    const component = getComponent();
+    const props = {};
+
+    return render(component, props, request);
 }</code></pre>
 </div>
 </div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Upgrade <code>lib-react4xp</code> and <code>@enonic/react4xp</code> <strong>together</strong>, and rebuild the application - assets compiled with version 6 will fail to load at SSR startup.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<code>@enonic-types/global</code> 8 brings in <code>@enonic-types/core</code>, which replaces the old <code>@enonic/js-utils</code> request type - see <a href="#update-types">Update to the new types</a> below.
-</td>
-</tr>
-</table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="mount_the_react4xp_api"><a class="link" href="#mount_the_react4xp_api">Mount the React4XP API</a></h3>
+<div class="sect1">
+<h2 id="entries"><a class="link" href="#entries">Entries</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>XP 8 serves React4XP&#8217;s compiled assets and SSR endpoints through a <code>react4xp</code> web API that must be mounted in the site descriptor - and in any webapp or admin tool that renders React4XP:</p>
+<p>The entries do <strong>not</strong> move along with the controllers.
+When <code>render()</code> is given a component object, it derives the entry name from the component descriptor as <code>site/parts/&lt;name&gt;/&lt;name&gt;</code>, and React4XP still compiles entries found below <code>src/main/resources/site/</code>.
+XP 8 itself ignores that folder, so keep it for the legacy entries only:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>src/main/resources/
+├── cms/
+│   └── parts/
+│       └── example/
+│           ├── example.ts        <i class="conum" data-value="1"></i><b>(1)</b>
+│           └── example.yaml
+└── site/
+    └── parts/
+        └── example/
+            └── example.tsx       <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The controller, moved to <code>cms/</code> by the standard upgrade.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The entry, left in <code>site/</code> so its jsxPath stays <code>site/parts/example/example</code>.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Alternatively, move the entry to one of the <a href="entries.ahtml#howto">entryDirs</a> configured in <code>react4xp.config.js</code> and pass its jsxPath to <code>render()</code> explicitly, for example <code>render('example', props, request)</code> for <code>react4xp/entries/example.tsx</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="site_descriptor"><a class="link" href="#site_descriptor">Site descriptor</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Legacy parts are rendered by XP&#8217;s regular component pipeline, so requests to them must not be caught by the React4XP <a href="app.ahtml#site-mapping">site mapping</a>.
+The inverted pattern that excluded them in <code>site.xml</code> is written as <code>invertPattern: true</code> in <code>site.yaml</code>, and the <code>react4xp</code> API must be mounted:</p>
 </div>
 <div class="listingblock">
 <div class="title">src/main/resources/cms/site.yaml</div>
 <div class="content">
-<pre class="highlight"><code class="language-yaml" data-lang="yaml">kind: "Site"
+<pre class="highlight"><code class="language-YAML" data-lang="YAML">kind: "Site"
+mappings:
+  - controller: "/cms/app.js"
+    order: 10
+    pattern: "/r4xp5.*"       <i class="conum" data-value="1"></i><b>(1)</b>
+    invertPattern: true
+  - controller: "/cms/component.js"
+    service: "component"
+    order: 10
 apis:
   - "asset"
-  - "react4xp"</code></pre>
+  - "react4xp"                <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="switch_to_the_new_build_tooling"><a class="link" href="#switch_to_the_new_build_tooling">Switch to the new build tooling</a></h3>
-<div class="paragraph">
-<p>React4XP 7 changes how the application is compiled:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Server-side TypeScript is compiled with <a href="https://tsdown.dev" target="_blank" rel="noopener">tsdown</a> - add <code>tsdown</code> and <code>@swc/core</code> to <code>devDependencies</code>.
-React entries (<code>.tsx</code>) are still compiled by React4XP with Rspack.</p>
-</li>
-<li>
-<p>React4XP uses Rspack&#8217;s native CSS support, so the old <code>mini-css-extract-plugin</code> is gone.
-CSS Modules work out of the box for <code><strong>.module.css</code> and <code></strong>.module.scss</code> files.</p>
-</li>
-</ul>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Content rendered with legacy parts must live under a path matching this pattern - adjust it to fit your site.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Required on XP 8, also for legacy parts - <code>render()</code> resolves its asset URLs through this API.</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -608,59 +597,39 @@ CSS Modules work out of the box for <code><strong>.module.css</code> and <code><
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The easiest way to get the exact, up-to-date build configuration (<code>tsdown.config.ts</code>, <code>react4xp.config.js</code>, <code>webpack.config.react4xp.js</code> and the <code>tsconfig.json</code> files) is to copy them from the <a href="https://github.com/enonic/starter-react4xp" target="_blank" rel="noopener">React4XP starter</a>.
+If the application has no <code>componentRegistry</code> at all, drop the <code>mappings</code> section and keep only <code>apis</code>.
 </td>
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="removed_apis"><a class="link" href="#removed_apis">Removed APIs</a></h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Update the npm scripts so the build runs tsdown (server code and client assets) and React4XP (the <code>.tsx</code> entries), with the type checks split into the React4XP and server projects:</p>
+<p>Compiled assets are now served by the <code>react4xp</code> API instead of the <code>react4xp</code> XP service. <code>render()</code> handles this by itself, so the only requirement is to mount the API as shown above.</p>
 </div>
-<div class="listingblock">
-<div class="title">package.json</div>
-<div class="content">
-<pre class="highlight"><code class="language-json" data-lang="json">"scripts": {
-  "build":                "tsdown",
-  "build:react4xp":       "npm explore @enonic/react4xp -- npm run build:react4xp",
-  "check":                "concurrently -c auto -g --timings npm:check:types:*",
-  "check:types:react4xp": "npx tsc --noEmit -p src/main/resources/react4xp/tsconfig.json",
-  "check:types:server":   "npx tsc --noEmit -p src/main/resources/tsconfig.json"
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="update-types"><a class="link" href="#update-types">Update to the new types</a></h3>
 <div class="paragraph">
-<p>React4XP 7 builds on <code>@enonic-types/core</code>.
-In your functions and processors, replace <code>Enonic.Xp.Http.Request</code> from <code>@enonic/js-utils/types/Request</code> with <code>Request</code> from <code>@enonic-types/core</code>.</p>
+<p>Two things are gone without a direct replacement:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>react4xp-dependencies</code> XP service, which returned the dependency URLs of a set of entries over HTTP. Server-side, <code>getComponentChunkUrls</code> from <code>/lib/enonic/react4xp</code> still provides the same information.</p>
+</li>
+<li>
+<p><code>serviceUrl</code> from <code>/lib/enonic/react4xp</code>. Use <code>assetUrl</code> to build URLs to compiled assets.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="build-deploy"><a class="link" href="#build-deploy">Build and deploy</a></h2>
+<h2 id="build_and_deploy"><a class="link" href="#build_and_deploy">Build and deploy</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Make a production build and deploy it to your sandbox:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">enonic project build</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">enonic project deploy</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can also run the project in development mode, which watches for changes and automatically deploys them to the sandbox:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">enonic dev</code></pre>
-</div>
+<p>Build and deploy as described in the <a href="upgrade.ahtml#build-deploy">upgrade notes</a>.</p>
 </div>
 </div>
 </div>

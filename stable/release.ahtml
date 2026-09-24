@@ -528,7 +528,8 @@ See the upgrade notes for the exact versions.</p>
 <h2 id="still_included_from_version_6"><a class="link" href="#still_included_from_version_6">Still included from version 6</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The version 6 architecture carries over unchanged: a detached front-end, a single React app per page, the componentRegistry and dataFetcher rendering model, hashed and cache-optimized asset serving, and full <a href="https://market.enonic.com/vendors/enonic/booster">Booster</a> compatibility.</p>
+<p>The version 6 architecture carries over unchanged: a detached front-end, a single React app per page, the componentRegistry and dataFetcher rendering model, hashed and cache-optimized asset serving, and full <a href="https://market.enonic.com/vendors/enonic/booster">Booster</a> compatibility.
+Rendering parts the version 5 way, without the componentRegistry, is still supported - see the <a href="legacy-upgrade.ahtml">legacy mode upgrade</a>.</p>
 </div>
 </div>
 </div>
@@ -543,7 +544,7 @@ See the upgrade notes for the exact versions.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-08-04 07:57:22 UTC
+Last updated 2026-09-24 11:32:55 UTC
 </div>
 </div>
 </body>

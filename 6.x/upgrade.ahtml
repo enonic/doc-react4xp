@@ -560,7 +560,8 @@ export default Example;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Notice how the Example component receives <code>ComponentProps&lt;PartData&gt;</code> type props.
+<p>You&#8217;ll need to run <code>npm install dayjs</code> for this to work.
+Notice how the Example component receives <code>ComponentProps&lt;PartData&gt;</code> type props.
 This is going to be true for any other component as well, except that <code>PartData</code>, specifying type of the component field, will be <code>LayoutData</code> for layouts, or <code>PageData</code> for pages:</p>
 </div>
 <div class="listingblock">
@@ -1000,7 +1001,7 @@ Notice how we used data fetcher result stored in <code>data</code> field to acce
 </table>
 </div>
 <div class="listingblock">
-<div class="title">src/main/resources/components/layouts/twoColumn.css</div>
+<div class="title">src/main/resources/components/layouts/twoColumn.module.css</div>
 <div class="content">
 <pre class="highlight"><code class="language-css" data-lang="css">.section {
   display: flex;
@@ -1080,7 +1081,7 @@ dataFetcher.addLayout('com.enonic.app.react4xp:TwoColumns', {processor: layoutPr
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-08-04 07:57:49 UTC
+Last updated 2026-09-24 11:33:20 UTC
 </div>
 </div>
 </body>

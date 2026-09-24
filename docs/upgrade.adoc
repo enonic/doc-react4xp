@@ -66,6 +66,7 @@ export const Example = (props: ComponentProps<PartData>) => {
 export default Example;
 ----
 +
+You'll need to run `npm install dayjs` for this to work.
 Notice how the Example component receives `ComponentProps<PartData>` type props.
 This is going to be true for any other component as well, except that `PartData`, specifying type of the component field, will be `LayoutData` for layouts, or `PageData` for pages:
 +
@@ -443,7 +444,7 @@ export const TwoColumnLayout = ({component, meta, data}: ComponentProps<LayoutDa
 
 NOTE: Notice how we used data fetcher result stored in `data` field to access the `tags` property.
 
-.src/main/resources/components/layouts/twoColumn.css
+.src/main/resources/components/layouts/twoColumn.module.css
 [source,css]
 ----
 .section {
